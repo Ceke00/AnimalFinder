@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AnimalFinderBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a2eb23372985cc2e1aa52e4c425f058bb3a8c1e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+abfbe11c5fb34fe790bb93d13ca6edee09ed324a")]
 [assembly: System.Reflection.AssemblyProductAttribute("AnimalFinderBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AnimalFinderBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
