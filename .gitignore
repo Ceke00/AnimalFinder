@@ -25,3 +25,13 @@ yarn-error.log*
 # Visual Studio
 .vs/
 *.vsidx
+
+
+# ASP.NET specific files
+bin/
+obj/
+*.user
+*.suo
+*.csproj.user
+*.dbmdl
+*.log
