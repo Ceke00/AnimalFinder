@@ -1,0 +1,29 @@
+//General settings to all app
+
+body {
+  background: var(--light);
+  background: linear-gradient(
+    30deg,
+    var(--light) 0%,
+    var(--primary-subtle) 100%
+  );
+  min-height: 100vh;
+}
+
+p {
+  a {
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+}
+
+form {
+  label {
+    font-weight: 600;
+    margin-top: 0.8rem;
+  }
+}
