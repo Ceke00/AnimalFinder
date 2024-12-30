@@ -1,0 +1,6 @@
+@AnimalFinderBackend_HostAddress = http://localhost:5205
+
+GET {{AnimalFinderBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
