@@ -1,0 +1,49 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Elev\\source\\Fullstack\\AnimalFinder\\animal-finder-backend\\AnimalFinderBackend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B054DABC-3DC9-453E-8633-254DEB0702C1}|AnimalFinderBackend\\AnimalFinderBackend.csproj|c:\\users\\elev\\source\\fullstack\\animalfinder\\animal-finder-backend\\animalfinderbackend\\animalfinderbackend\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B054DABC-3DC9-453E-8633-254DEB0702C1}|AnimalFinderBackend\\AnimalFinderBackend.csproj|solutionrelative:animalfinderbackend\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 310,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Elev\\source\\Fullstack\\AnimalFinder\\animal-finder-backend\\AnimalFinderBackend\\AnimalFinderBackend\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "AnimalFinderBackend\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Elev\\source\\Fullstack\\AnimalFinder\\animal-finder-backend\\AnimalFinderBackend\\AnimalFinderBackend\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "AnimalFinderBackend\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAYwGYAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-30T12:33:21.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
