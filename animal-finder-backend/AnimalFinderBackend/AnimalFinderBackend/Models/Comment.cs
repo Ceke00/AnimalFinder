@@ -4,7 +4,7 @@
         {
         public int CommentId { get; set; } // Primary key
         public int AnimalId { get; set; } // Foreign key
-        public string UserId { get; set; } // Foreign key 
+        public string UserId { get; set; } // Foreign key (GUID)
         public string Content { get; set; }
         public DateTime DateCreated { get; set; }
 

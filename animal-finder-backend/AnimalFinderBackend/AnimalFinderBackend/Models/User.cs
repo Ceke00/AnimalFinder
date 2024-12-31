@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace AnimalFinderBackend.Models
     {
@@ -7,6 +9,7 @@ namespace AnimalFinderBackend.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        [JsonIgnore]
         public ICollection<Animal> Animals { get; set; }
         public ICollection<Comment> Comments { get; set; }
         }

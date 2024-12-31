@@ -118,11 +118,14 @@ namespace AnimalFinderBackend.Controllers
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                         new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim(ClaimTypes.NameIdentifier, user.Id),
                         new Claim("FirstName", user.FirstName),
                         new Claim("LastName", user.LastName)
                     }),
                     //expires in 1h
                     Expires = DateTime.UtcNow.AddHours(1),
+                    Issuer = _configuration["Jwt:Issuer"],
+                    Audience = _configuration["Jwt:Audience"],
                     //Signing token. Includes key and type of algorithm used to create signature
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
