@@ -8,7 +8,8 @@ const Test = () => {
     const fetchTests = async () => {
       try {
         const response = await TestService.getTests();
-        setTests(response.data);
+        const data = response.data.$values;
+        setTests(data);
       } catch (error) {
         console.error("Error fetching tests:", error);
       }
@@ -26,8 +27,8 @@ const Test = () => {
         <ul>
           {tests.map((test) => (
             <li key={test.id}>
-              <p>{test.name} </p>
-              <p> {test.description}</p>
+              <p>{test.name}</p>
+              <p>{test.description}</p>
             </li>
           ))}
         </ul>

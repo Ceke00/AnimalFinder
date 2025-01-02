@@ -31,7 +31,9 @@ const RegisterPage = () => {
           const errorMessages = error.response.data.errors;
           const newErrors = {};
           for (const key in errorMessages) {
-            newErrors[key] = errorMessages[key].join(" ");
+            if (key !== "$id") {
+              newErrors[key] = errorMessages[key].join(" ");
+            }
           }
           setErrors(newErrors);
         } else {

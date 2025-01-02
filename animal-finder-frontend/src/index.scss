@@ -3,14 +3,19 @@
 body {
   background: var(--light);
   background: linear-gradient(
-    30deg,
+    50deg,
     var(--light) 0%,
-    var(--primary-subtle) 100%
+    var(--secondary-subtle) 100%
   );
   min-height: 100vh;
+ 
+}
+.card{
+  text-align: left;
 }
 
 p {
+  
   a {
     text-decoration: underline;
     text-underline-offset: 0.3rem;

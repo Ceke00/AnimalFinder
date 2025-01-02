@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import AuthService from "../services/auth.service";
-import { useNavigate } from "react-router-dom";
 
 function MemberPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     try {
@@ -21,9 +19,9 @@ function MemberPage() {
           setLastName(user.lastName);
 
           //Console
-             console.log("Set username to:", user.username);
-             console.log("Set lastname to: " + user.lastName);
-             console.log("Set firstname to: " + user.firstName);
+          console.log("Set username to:", user.username);
+          console.log("Set lastname to: " + user.lastName);
+          console.log("Set firstname to: " + user.firstName);
         } else {
           console.warn("No username found in user object");
         }
@@ -35,16 +33,11 @@ function MemberPage() {
     }
   }, []);
 
-  const handleLogout = () => {
-    AuthService.logout();
-    navigate("/loggedout");
-  };
-
-
   return (
     <div>
-      <h1>Welcome to your page {firstName} {lastName}</h1>
-      <button onClick={handleLogout}>Log out</button>
+      <h1>
+        Welcome to your page {firstName} {lastName}
+      </h1>
     </div>
   );
 }

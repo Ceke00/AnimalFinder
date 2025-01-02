@@ -1,10 +1,13 @@
 import React from 'react'
-import Test from '../components/Test'
+
+import AnimalCards from '../components/AnimalCards'
+
 function HomePage() {
   return (
     <div>
-        <h1>Home Page</h1>
-      <Test/>
+     
+     
+      <AnimalCards/>
     </div>
   )
 }

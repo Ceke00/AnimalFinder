@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav, Container } from "react-bootstrap";
-import "./NavMenu.scss"
-import logo from "../images/animal_logo.webp";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import "./NavMenu.scss";
+import logo from "../images/animal_logo_paw.svg";
 
-function NavMenu() {
+function NavMenu({ isLoggedIn, handleLogout }) {
   const [expanded, setExpanded] = useState(false);
+  const [username, setUsername] = useState("Member");
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      if (storedUser) {
+        setUsername(storedUser.username);
+      }
+    }
+  }, [isLoggedIn]);
 
   const closeNavbar = () => {
     setExpanded(false);
@@ -40,26 +50,95 @@ function NavMenu() {
             >
               Home
             </Nav.Link>
-            <Nav.Link
-              as={NavLink}
-              to="/memberpage"
-              onClick={closeNavbar}
-              className={({ isActive }) =>
-                isActive ? "active nav-link" : "nav-link"
-              }
-            >
-              Member page
-            </Nav.Link>
-            <Nav.Link
-              as={NavLink}
-              to="/login"
-              onClick={closeNavbar}
-              className={({ isActive }) =>
-                isActive ? "active nav-link" : "nav-link"
-              }
-            >
-              Login
-            </Nav.Link>
+
+            <NavDropdown title="Member pages" id="basic-nav-dropdown">
+              {!isLoggedIn && (
+                <NavDropdown.Item
+                  as={NavLink}
+                  to="/login"
+                  onClick={closeNavbar}
+                  className={({ isActive }) =>
+                    isActive ? "active nav-link" : "nav-link"
+                  }
+                >
+                  {" "}
+                  Login to access
+                </NavDropdown.Item>
+              )}
+
+              {isLoggedIn && (
+                <>
+                  <NavDropdown.Item
+                    as={NavLink}
+                    to="/memberpage"
+                    onClick={closeNavbar}
+                    className={({ isActive }) =>
+                      isActive ? "active nav-link" : "nav-link"
+                    }
+                  >
+                    My Animals
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item
+                    as={NavLink}
+                    to="/memberpage/addanimal"
+                    onClick={closeNavbar}
+                    className={({ isActive }) =>
+                      isActive ? "active nav-link" : "nav-link"
+                    }
+                  >
+                    Add New Animal
+                  </NavDropdown.Item>
+
+                  {/* <NavDropdown.Item
+                    as={NavLink}
+                    to="/memberpage/deleteanimal"
+                    onClick={closeNavbar}
+                    className={({ isActive }) =>
+                      isActive ? "active nav-link" : "nav-link"
+                    }
+                  >
+                    Delete Animal
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item
+                    as={NavLink}
+                    to="/memberpage/updateanimal"
+                    onClick={closeNavbar}
+                    className={({ isActive }) =>
+                      isActive ? "active nav-link" : "nav-link"
+                    }
+                  >
+                    Update Animal
+                  </NavDropdown.Item> */}
+
+                  <NavDropdown.Item
+                    as={NavLink}
+                    to="/memberpage/comment"
+                    onClick={closeNavbar}
+                    className={({ isActive }) =>
+                      isActive ? "active nav-link" : "nav-link"
+                    }
+                  >
+                    All Animals
+                  </NavDropdown.Item>
+                </>
+              )}
+            </NavDropdown>
+
+            {isLoggedIn && (
+                <NavLink
+                  to="/loggedout"
+                  onClick={() => {
+                    closeNavbar();
+                    handleLogout();
+                  }}
+                  className="btn btn-outline-warning"
+                >
+                  Logout ({username})
+                </NavLink>
+              
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

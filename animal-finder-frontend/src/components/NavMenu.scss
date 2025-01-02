@@ -1,9 +1,12 @@
 .navbar {
-
+  .btn {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
   .navbar-brand {
     //color: var(--primary-subbtle);
     //width: 300px;
-   // height: auto;
+    // height: auto;
 
     // &:hover,
     // &:focus {
@@ -11,7 +14,7 @@
     // }
     &:focus {
       outline: var(--warning) solid 2px;
-    } 
+    }
   }
   .nav-link {
     color: var(--light);
@@ -37,7 +40,21 @@
       color: var(--warning);
     }
   }
-  .navbar-toggler { 
+
+  .dropdown-item {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    &:hover {
+      background-color: var(--secondary);
+    }
+    &.active {
+      background-color: transparent;
+      &::before {
+        content: "➤ ";
+      }
+    }
+  }
+  .navbar-toggler {
     color: var(--light);
     &:hover {
       border-color: var(--light);
@@ -47,19 +64,20 @@
 @media (max-width: 992px) {
   .navbar {
     .nav-link {
-     margin-bottom: 2rem;
+      margin-bottom: 2rem;
     }
     .navbar-collapse {
       padding-top: 2rem;
-     
     }
-   
   }
 }
 @media (max-width: 768px) {
   .navbar {
     .navbar-brand {
       width: 200px;
+    }
+    .dropdown-toggle {
+      margin-bottom: 1rem !important;
     }
   }
 }

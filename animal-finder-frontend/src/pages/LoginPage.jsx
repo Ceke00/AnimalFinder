@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = ({setIsLoggedIn}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -16,6 +16,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const userData = await AuthService.login(email, password);
+      setIsLoggedIn(true);
       console.log("Logged in user data:", userData);
       navigate("/memberpage");
     } catch (error) {
