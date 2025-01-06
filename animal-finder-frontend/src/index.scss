@@ -10,9 +10,13 @@ body {
   min-height: 100vh;
  
 }
+.line-length{
+  max-width: 65ch !important;
+}
 .card{
   text-align: left;
 }
+
 
 p {
   
@@ -31,4 +35,9 @@ form {
     font-weight: 600;
     margin-top: 0.8rem;
   }
+}
+
+.thumbnail {
+  width: 80px; 
+  height: auto; 
 }

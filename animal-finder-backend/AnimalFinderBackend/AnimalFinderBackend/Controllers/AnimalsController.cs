@@ -17,13 +17,21 @@ namespace AnimalFinderBackend.Controllers
     [ApiController]
     public class AnimalsController : ControllerBase
         {
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ApplicationDbContext _context;
 
-        public AnimalsController(ApplicationDbContext context)
+        public AnimalsController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment)
             {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
+
+            //if (string.IsNullOrEmpty(_hostingEnvironment.WebRootPath))
+            //    {
+            //    throw new InvalidOperationException("WebRootPath is not set.");
+            //    }
             }
 
+        //Listing all animals
         // GET: api/Animals
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Animal>>> GetAnimals()
@@ -31,7 +39,8 @@ namespace AnimalFinderBackend.Controllers
             return await _context.Animals.ToListAsync();
             }
 
-        // GET: api/Animals/5
+        //Used by PostAnimal to confirm post and give feedback to client
+        //GET: api/Animals/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Animal>> GetAnimal(int id)
             {
@@ -41,25 +50,36 @@ namespace AnimalFinderBackend.Controllers
                 {
                 return NotFound();
                 }
-
             return animal;
             }
 
-
+        //Specific user adding new animal
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<Animal>> PostAnimal(AnimalDto animalDto)
+        public async Task<ActionResult<Animal>> PostAnimal([FromForm] AnimalDto animalDto, IFormFile imageFile)
             {
+            if (!ModelState.IsValid)
+                {
+                return BadRequest(new ValidationProblemDetails(ModelState));
+                }
+
+            //If image file is missing
+            if (imageFile == null)
+                {
+                ModelState.AddModelError("ImageFile", "An image file is required.");
+                return BadRequest(ModelState);
+                }
+
             //Getting Id from token
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-
+            Console.WriteLine($"UserId from token: {userId}");
 
             //Control if Id is empty
             if (string.IsNullOrEmpty(userId))
                 {
                 return Unauthorized();
                 }
+
             //Getting user from db
             var user = await _context.Users.FindAsync(userId);
             if (user == null)
@@ -67,6 +87,53 @@ namespace AnimalFinderBackend.Controllers
                 return Unauthorized();
                 }
 
+            string imageUrl = null;
+
+            //If there is a file, this will be saved in the folder uploads
+            if (imageFile != null)
+                {
+                // Allowed file types
+                var allowedFileTypes = new[] { "image/jpeg", "image/png", "image/webp" };
+
+                // Max file size in bytes (1MB)
+                var maxFileSize = 2 * 1024 * 1024;
+
+                // Check file type
+                if (!allowedFileTypes.Contains(imageFile.ContentType))
+                    {
+                    ModelState.AddModelError("ImageFile", "Invalid file type. Only JPEG, PNG, and WEBP are allowed.");
+                    return BadRequest(new ValidationProblemDetails(ModelState));
+                    }
+
+                // Check file size
+                if (imageFile.Length > maxFileSize)
+                    {
+                    ModelState.AddModelError("ImageFile", "File size exceeds the 1 MB limit.");
+                    return BadRequest(new ValidationProblemDetails(ModelState));
+                    }
+
+                //Creates path to folder uploads
+                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+                //Creates folder if does not exist
+                if (!Directory.Exists(uploads))
+                    {
+                    Directory.CreateDirectory(uploads);
+                    }
+
+                //Creates unique filename
+                var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+
+                //combines path to folder and the file name
+                var filePath = Path.Combine(uploads, uniqueFileName);
+
+                //Creates new file with the uploaded content
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                    await imageFile.CopyToAsync(fileStream);
+                    }
+                //set imageUrl to the path of the file
+                imageUrl = "/uploads/" + uniqueFileName;
+                }
 
             var animal = new Animal
                 {
@@ -75,18 +142,17 @@ namespace AnimalFinderBackend.Controllers
                 Description = animalDto.Description,
                 Neighborhood = animalDto.Neighborhood,
                 DateOfDisappearance = animalDto.DateOfDisappearance,
-                ImageUrl = animalDto.ImageUrl,
+                ImageUrl = imageUrl,
                 UserId = userId,
                 DateAdded = DateTime.UtcNow,
-
                 };
 
             _context.Animals.Add(animal);
             await _context.SaveChangesAsync();
 
+            // Return a confirmation response to the client
             return CreatedAtAction("GetAnimal", new { id = animal.AnimalId }, animal);
             }
-
 
         //Getting animals for a specific user
         [Authorize]
@@ -106,7 +172,6 @@ namespace AnimalFinderBackend.Controllers
                 {
                 return NotFound("You do not have any animals listed.");
                 }
-
             return Ok(animals);
             }
 
@@ -160,17 +225,11 @@ namespace AnimalFinderBackend.Controllers
             return NoContent();
             }
 
-
-
-
-
-
         //Deleting a specific animal for a specific user
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserAnimal(int id)
             {
-
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(userId))
@@ -194,7 +253,6 @@ namespace AnimalFinderBackend.Controllers
 
             return NoContent();
             }
-
 
         private bool AnimalExists(int id)
             {

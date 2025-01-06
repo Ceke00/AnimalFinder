@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import "./NavMenu.scss";
 import logo from "../images/animal_logo_paw.svg";
+import AuthService from "../services/auth.service";
 
 function NavMenu({ isLoggedIn, handleLogout }) {
   const [expanded, setExpanded] = useState(false);
@@ -19,6 +20,11 @@ function NavMenu({ isLoggedIn, handleLogout }) {
 
   const closeNavbar = () => {
     setExpanded(false);
+  };
+  const handleLogoutClick = () => {
+    AuthService.logout();
+    handleLogout();
+    closeNavbar();
   };
 
   return (
@@ -81,7 +87,7 @@ function NavMenu({ isLoggedIn, handleLogout }) {
 
                   <NavDropdown.Item
                     as={NavLink}
-                    to="/memberpage/addanimal"
+                    to="/addanimal"
                     onClick={closeNavbar}
                     className={({ isActive }) =>
                       isActive ? "active nav-link" : "nav-link"
@@ -92,7 +98,7 @@ function NavMenu({ isLoggedIn, handleLogout }) {
 
                   {/* <NavDropdown.Item
                     as={NavLink}
-                    to="/memberpage/deleteanimal"
+                    to="/deleteanimal"
                     onClick={closeNavbar}
                     className={({ isActive }) =>
                       isActive ? "active nav-link" : "nav-link"
@@ -103,7 +109,7 @@ function NavMenu({ isLoggedIn, handleLogout }) {
 
                   <NavDropdown.Item
                     as={NavLink}
-                    to="/memberpage/updateanimal"
+                    to="/updateanimal"
                     onClick={closeNavbar}
                     className={({ isActive }) =>
                       isActive ? "active nav-link" : "nav-link"
@@ -114,7 +120,7 @@ function NavMenu({ isLoggedIn, handleLogout }) {
 
                   <NavDropdown.Item
                     as={NavLink}
-                    to="/memberpage/comment"
+                    to="/comment"
                     onClick={closeNavbar}
                     className={({ isActive }) =>
                       isActive ? "active nav-link" : "nav-link"
@@ -127,17 +133,13 @@ function NavMenu({ isLoggedIn, handleLogout }) {
             </NavDropdown>
 
             {isLoggedIn && (
-                <NavLink
-                  to="/loggedout"
-                  onClick={() => {
-                    closeNavbar();
-                    handleLogout();
-                  }}
-                  className="btn btn-outline-warning"
-                >
-                  Logout ({username})
-                </NavLink>
-              
+              <NavLink
+                to="/loggedout"
+                onClick={handleLogoutClick}
+                className="btn btn-outline-warning"
+              >
+                Log out ({username})
+              </NavLink>
             )}
           </Nav>
         </Navbar.Collapse>

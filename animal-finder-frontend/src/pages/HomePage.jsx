@@ -1,13 +1,13 @@
 import React from 'react'
 
-import AnimalCards from '../components/AnimalCards'
+import AnimalCardsHome from '../components/AnimalCardsHome'
 
 function HomePage() {
   return (
     <div>
      
      
-      <AnimalCards/>
+      <AnimalCardsHome/>
     </div>
   )
 }

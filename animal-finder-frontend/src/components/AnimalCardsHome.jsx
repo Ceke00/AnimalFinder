@@ -4,12 +4,11 @@ import AnimalCard from "./AnimalCard";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-import placeholderImage from "../images/placeholder.jpg";
 import { Row, Col } from "react-bootstrap";
 import "./AnimalCards.scss";
 import { useNavigate } from "react-router-dom";
 
-const AnimalCards = () => {
+const AnimalCardsHome = () => {
   const [animals, setAnimals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
@@ -18,6 +17,7 @@ const AnimalCards = () => {
 
   useEffect(() => {
     const fetchAnimals = async () => {
+      setLoading(true);
       try {
         const response = await AnimalService.getAnimals();
         const data = response.data.$values;
@@ -86,7 +86,7 @@ const AnimalCards = () => {
           </Modal.Header>
           <Modal.Body>
             <img
-              src={placeholderImage}
+              src={`https://localhost:7221${selectedAnimal.imageUrl}`}
               alt={selectedAnimal.name}
               style={{ maxWidth: "50%", marginBottom: "1rem" }}
             />
@@ -97,7 +97,9 @@ const AnimalCards = () => {
             <p>
               <strong>Neighborhood:</strong> {selectedAnimal.neighborhood}
             </p>
-            <p>{selectedAnimal.description}</p>
+            <p>
+              <strong>Description:</strong> {selectedAnimal.description}
+            </p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
@@ -105,7 +107,7 @@ const AnimalCards = () => {
             </Button>
             <Button
               variant="primary"
-              onClick={() => navigate("/memberpage/comment")}
+              onClick={() => navigate("/comment")}
             >
               Contact Owner
             </Button>
@@ -116,4 +118,4 @@ const AnimalCards = () => {
   );
 };
 
-export default AnimalCards;
+export default AnimalCardsHome;

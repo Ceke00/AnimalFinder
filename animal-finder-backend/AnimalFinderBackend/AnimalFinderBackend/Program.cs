@@ -1,5 +1,3 @@
-
-
 using AnimalFinderBackend.Data;
 using AnimalFinderBackend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -8,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+
+
 // builder will configure and build application
 var builder = WebApplication.CreateBuilder(args);
 
@@ -103,6 +103,8 @@ builder.Services.AddEndpointsApiExplorer(); builder.Services.AddSwaggerGen(
 
 //Building App
 var app = builder.Build();
+
+
 
 //Using Swagger for developement
 if (app.Environment.IsDevelopment())

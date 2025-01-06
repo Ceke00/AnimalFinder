@@ -95,7 +95,7 @@
 // export default App;
 
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -110,22 +110,47 @@ import MemberPageAddAnimal from "./pages/MemberPageAddAnimal";
 import MemberPageComment from "./pages/MemberPageComment";
 import MemberPageDeleteAnimal from "./pages/MemberPageDeleteAnimal";
 import MemberPageUpdateAnimal from "./pages/MemberPageUpdateAnimal";
+import { jwtDecode } from "jwt-decode";
+import AuthService from "./services/auth.service";
+import ErrorPage from "./pages/ErrorPage";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("user"));
+   const navigate = useNavigate();
   console.log("logged in: " + isLoggedIn);
+ 
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setIsLoggedIn(true);
-      console.log("if -> logged in: " + isLoggedIn);
-    }
+    const checkTokenValidity = () => {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      if (storedUser) {
+        //Getting expiration time for token
+        const token = storedUser.token;
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+
+        //if token has expired -logout. If token is valid sets timer for logout.
+        if (decodedToken.exp < currentTime) {
+          handleLogout();
+        } else {
+          setIsLoggedIn(true);
+          const expirationTime = decodedToken.exp * 1000 - Date.now();
+          setTimeout(() => {
+            handleLogout();
+          }, expirationTime);
+        }
+      }
+    };
+
+    checkTokenValidity();
   }, []);
 
+
+
   const handleLogout = () => {
-    localStorage.removeItem("user");
+   AuthService.logout();
     setIsLoggedIn(false);
+     navigate("/loggedout");
   };
 
   return (
@@ -134,6 +159,7 @@ const App = () => {
       <Container>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/*" element={<ErrorPage/>}/>
           <Route
             path="/login"
             element={<LoginPage setIsLoggedIn={setIsLoggedIn} />}
@@ -149,7 +175,7 @@ const App = () => {
             }
           />
           <Route
-            path="/memberpage/addanimal"
+            path="/addanimal"
             element={
               <ProtectedRoute>
                 <MemberPageAddAnimal />
@@ -157,7 +183,7 @@ const App = () => {
             }
           />
           <Route
-            path="/memberpage/comment"
+            path="/comment"
             element={
               <ProtectedRoute>
                 <MemberPageComment />
@@ -165,7 +191,7 @@ const App = () => {
             }
           />
           <Route
-            path="/memberpage/deleteanimal"
+            path="/deleteanimal"
             element={
               <ProtectedRoute>
                 <MemberPageDeleteAnimal />
@@ -173,7 +199,7 @@ const App = () => {
             }
           />
           <Route
-            path="/memberpage/updateanimal"
+            path="/updateanimal"
             element={
               <ProtectedRoute>
                 <MemberPageUpdateAnimal />
