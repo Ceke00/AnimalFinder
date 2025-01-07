@@ -27,34 +27,37 @@ const LoginPage = ({ setIsLoggedIn }) => {
   };
 
   return (
-    <Form onSubmit={handleLogin}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          type="email"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          placeholder="Enter password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </Form.Group>
-      <p>
-        Not a member yet? <Link to="/register"> Register here!</Link>{" "}
-      </p>
+    <div>
+      <h1>Login &ndash; Animal Finder</h1>
+      <Form onSubmit={handleLogin}>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            placeholder="Enter password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
+        <p>
+          Not a member yet? <Link to="/register"> Register here!</Link>{" "}
+        </p>
 
-      <Button variant="primary" type="submit">
-        Login
-      </Button>
-      {message && <p className="text-danger mt-2">{message}</p>}
-    </Form>
+        <Button variant="primary" type="submit">
+          Login
+        </Button>
+        {message && <p className="text-danger mt-2">{message}</p>}
+      </Form>
+    </div>
   );
 };
 

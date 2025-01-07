@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container } from "react-bootstrap";
 import "./WelcomeHome.scss";
 
 function WelcomeHome() {
@@ -18,7 +17,7 @@ function WelcomeHome() {
           <strong>It's free </strong>to become a member!
         </p>
 
-        <Link className="btn btn-primary">Register now</Link>
+        <Link to="/register"className="btn btn-primary">Register now</Link>
       </div>
     </header>
   );

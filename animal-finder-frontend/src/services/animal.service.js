@@ -22,39 +22,6 @@ const getAnimals = () => {
 const getUserAnimals = () => {
   return axios.get(API_URL + "user", getAuthHeader());
 };
-// const getUserAnimals = () => {
-//   const user = JSON.parse(localStorage.getItem("user"));
-//   const token = user?.token;
-//   const authHeader = {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   };
-//   return axios.get(API_URL + "user", authHeader);
-// };
-
-//Posting animal
-// const postAnimal = (
-//   type,
-//   name,
-//   description,
-//   neighborhood,
-//   dateOfDisappearance,
-//   imageUrl
-// ) => {
-//   return axios.post(
-//     API_URL,
-//     {
-//       type,
-//       name,
-//       description,
-//       neighborhood,
-//       dateOfDisappearance,
-//       imageUrl,
-//     },
-//     authHeader
-//   );
-// };
 
 // Posting animal
 const postAnimal = (formData) => {
@@ -67,27 +34,13 @@ const postAnimal = (formData) => {
 };
 
 //Updating a specific animal
-const updateAnimal = (
-  id,
-  type,
-  name,
-  description,
-  neighborhood,
-  dateOfDisappearance,
-  imageUrl
-) => {
-  return axios.put(
-    API_URL + id,
-    {
-      type,
-      name,
-      description,
-      neighborhood,
-      dateOfDisappearance,
-      imageUrl,
+const updateAnimal = (id, formData) => {
+  return axios.put(API_URL + id, formData, {
+    headers: {
+      ...getAuthHeader().headers,
+      "Content-Type": "multipart/form-data",
     },
-    getAuthHeader()
-  );
+  });
 };
 
 //Deleting a specific animal
@@ -95,10 +48,12 @@ const deleteAnimal = (id) => {
   return axios.delete(API_URL + id, getAuthHeader());
 };
 
+
 export default {
   getAnimals,
   getUserAnimals,
   postAnimal,
   updateAnimal,
   deleteAnimal,
+
 };

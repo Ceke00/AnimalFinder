@@ -53,7 +53,7 @@ const AnimalCardsHome = () => {
 
   return (
     <div>
-      <h2>Missing animals in Skåne</h2>
+      <h2>Missing animals in Lund</h2>
       <p>
         Click on an ad for more information!{" "}   
          <Link to="/login">Login</Link> to create an ad or to comment.
@@ -62,16 +62,7 @@ const AnimalCardsHome = () => {
       {animals.length === 0 ? (
         <p>No animals found.</p>
       ) : (
-        // <div className="d-flex flex-wrap">
-        //   {animals.map((animal) => (
-        //     <AnimalCard
-        //       key={animal.animalId}
-        //       animal={animal}
-        //       handleShow={handleShow}
-        //     />
-        //   ))}
-        // </div>
-        //xs={1} md={2} lg={3}
+       
         <Row xs={2} sm={2} md={3} lg={4} className="g-3 mt-2">
           {animals.map((animal) => (
             <Col key={animal.animalId}>

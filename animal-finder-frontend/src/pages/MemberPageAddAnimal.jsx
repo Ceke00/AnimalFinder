@@ -67,7 +67,7 @@ function MemberPageAddAnimal() {
 
   return (
     <div>
-      <h2>Add New Animal</h2>
+      <h1>Add New Animal</h1>
       <p>Fill in the form to create a missing animal ad! You can update the information whenever you want.</p>
       <Form onSubmit={handleAddAnimal}>
         <Form.Group className="mb-3" controlId="formAnimalType">

@@ -50,60 +50,66 @@ const RegisterPage = () => {
   };
 
   return (
-    <Form onSubmit={handleRegister}>
-      <Form.Group className="mb-3" controlId="formFirstName">
-        <Form.Label>First name</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter first name"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-        {errors.FirstName && <p className="text-danger">{errors.FirstName}</p>}
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formLastName">
-        <Form.Label>Last name</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter last name"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-        {errors.LastName && <p className="text-danger">{errors.LastName}</p>}
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          type="email"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {errors.Email && <p className="text-danger">{errors.Email}</p>}
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {errors.Password && <p className="text-danger">{errors.Password}</p>}
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Register
-      </Button>
-     
-     {/* if defined error message is not connected with any field */}
-      {errors[""] && (
-        <p className="text-danger">
-          {Array.isArray(errors[""]) ? errors[""].join(" ") : errors[""]}
-        </p>
-      )}
-      {/* if error is defiend as general*/}
-      {errors.general && <p className="text-danger">{errors.general}</p>}
-    </Form>
+    <div>
+      <h1>Registration &ndash; Animal Finder</h1>
+      <p>It's free to become a member. Just fill in this form!</p>
+      <Form onSubmit={handleRegister}>
+        <Form.Group className="mb-3" controlId="formFirstName">
+          <Form.Label>First name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter first name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          {errors.FirstName && (
+            <p className="text-danger">{errors.FirstName}</p>
+          )}
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formLastName">
+          <Form.Label>Last name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter last name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          {errors.LastName && <p className="text-danger">{errors.LastName}</p>}
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {errors.Email && <p className="text-danger">{errors.Email}</p>}
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {errors.Password && <p className="text-danger">{errors.Password}</p>}
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Register
+        </Button>
+
+        {/* if defined error message is not connected with any field */}
+        {errors[""] && (
+          <p className="text-danger">
+            {Array.isArray(errors[""]) ? errors[""].join(" ") : errors[""]}
+          </p>
+        )}
+        {/* if error is defiend as general*/}
+        {errors.general && <p className="text-danger">{errors.general}</p>}
+      </Form>
+    </div>
   );
 };
 
