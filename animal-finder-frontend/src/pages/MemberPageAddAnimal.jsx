@@ -49,6 +49,7 @@ function MemberPageAddAnimal() {
             newErrors[key] = errorMessages[key].join(" ");
           }
         }
+        console.log("New errors:", newErrors);
         setErrors(newErrors);
       } else {
         setErrors({
@@ -67,9 +68,10 @@ function MemberPageAddAnimal() {
   return (
     <div>
       <h2>Add New Animal</h2>
+      <p>Fill in the form to create a missing animal ad! You can update the information whenever you want.</p>
       <Form onSubmit={handleAddAnimal}>
         <Form.Group className="mb-3" controlId="formAnimalType">
-          <Form.Label>Type</Form.Label>
+          <Form.Label>Type of animal</Form.Label>
           <Form.Control
             type="text"
             value={type}
@@ -79,7 +81,7 @@ function MemberPageAddAnimal() {
           {errors.Type && <p className="text-danger">{errors.Type}</p>}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formAnimalName">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>Name of animal</Form.Label>
           <Form.Control
             type="text"
             value={name}
@@ -89,7 +91,7 @@ function MemberPageAddAnimal() {
           {errors.Name && <p className="text-danger">{errors.Name}</p>}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formAnimalDescription">
-          <Form.Label>Description</Form.Label>
+          <Form.Label>Description of animal (max 1000 char)</Form.Label>
           <Form.Control
             type="text"
             value={description}
@@ -101,7 +103,7 @@ function MemberPageAddAnimal() {
           )}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formAnimalNeighborhood">
-          <Form.Label>Neighborhood</Form.Label>
+          <Form.Label>Neighborhood in Lund</Form.Label>
           <Form.Control
             type="text"
             value={neighborhood}
@@ -113,7 +115,7 @@ function MemberPageAddAnimal() {
           )}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formAnimalDateOfDisappearance">
-          <Form.Label>Date of Disappearance</Form.Label>
+          <Form.Label>Date of disappearance</Form.Label>
           <Form.Control
             type="date"
             value={dateOfDisappearance}
@@ -125,14 +127,14 @@ function MemberPageAddAnimal() {
           <p className="text-danger">{errors.DateOfDisappearance}</p>
         )}
         <Form.Group className="mb-3" controlId="formAnimalImageUrl">
-          <Form.Label>Image</Form.Label>
+          <Form.Label>Image of animal (jpeg/jpg/webp/png - max 1MB)</Form.Label>
           <Form.Control
             type="file"
             onChange={(e) => setImageFile(e.target.files[0])}
             required
           />
-          {errors.ImageFile && (
-            <p className="text-danger">{errors.ImageFile}</p>
+          {errors.imageFile && (
+            <p className="text-danger">{errors.imageFile}</p>
           )}
         </Form.Group>
         <Button

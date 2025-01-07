@@ -1,12 +1,10 @@
 #header-home {
-
-  min-height: 90vh;
+  height: 100vh;
   background-color: var(--dark);
-background: linear-gradient(#ffd5aa20, #ffd5aa20) ,  url("../images/animals/cat.jpg") center center;
+  background: linear-gradient(#ffd5aa20, #ffd5aa20),
+    url("../images/animals/cat_576_700.webp") center center;
   background-size: cover;
- 
   background-repeat: no-repeat;
-  background-position: center;
   display: flex;
 
   .header-box {
@@ -21,14 +19,40 @@ background: linear-gradient(#ffd5aa20, #ffd5aa20) ,  url("../images/animals/cat.
     }
   }
 }
-@media (min-width: 769px) {
+@media (min-width: 576px) {
   #header-home {
-    min-height: 100vh;
+    height: 80vh;
+    background: linear-gradient(#ffd5aa20, #ffd5aa20),
+      url("../images/animals/cat_768_768.webp") center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+@media (min-width: 768px) {
+  #header-home {
+    background: linear-gradient(#ffd5aa20, #ffd5aa20),
+      url("../images/animals/cat_992_690.webp") center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  #header-home {
     background-position: bottom;
     .header-box {
-      margin: 2rem;
-      padding:1.5rem;
       align-self: flex-end;
+    }
+  }
+}
+@media (min-width: 992px) {
+  #header-home {
+    background: linear-gradient(#ffd5aa20, #ffd5aa20),
+      url("../images/animals/cat_1024_540.webp") center center;
+    background-repeat: no-repeat;
+
+    background-position: bottom;
+    background-size: cover;
+    .header-box {
+      margin: 2rem;
+      padding: 1.5rem;
     }
   }
 }
