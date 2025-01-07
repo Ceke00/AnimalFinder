@@ -1,0 +1,34 @@
+#header-home {
+
+  min-height: 90vh;
+  background-color: var(--dark);
+background: linear-gradient(#ffd5aa20, #ffd5aa20) ,  url("../images/animals/cat.jpg") center center;
+  background-size: cover;
+ 
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+
+  .header-box {
+    background-color: #f7f8f8e0;
+    margin: 1rem;
+    padding: 1rem;
+    height: fit-content;
+    border-radius: 1rem;
+
+    p {
+      max-width: 40ch;
+    }
+  }
+}
+@media (min-width: 769px) {
+  #header-home {
+    min-height: 100vh;
+    background-position: bottom;
+    .header-box {
+      margin: 2rem;
+      padding:1.5rem;
+      align-self: flex-end;
+    }
+  }
+}

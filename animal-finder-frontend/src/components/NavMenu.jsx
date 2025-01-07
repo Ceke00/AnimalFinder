@@ -34,7 +34,7 @@ function NavMenu({ isLoggedIn, handleLogout }) {
       expand="lg"
       bg="dark"
       data-bs-theme="dark"
-      className="mb-5"
+      className="mb-4"
     >
       <Container className="my-2">
         <Navbar.Brand as={NavLink} to="/" onClick={closeNavbar}>

@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { Row, Col } from "react-bootstrap";
 import "./AnimalCards.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const AnimalCardsHome = () => {
   const [animals, setAnimals] = useState([]);
@@ -53,7 +53,12 @@ const AnimalCardsHome = () => {
 
   return (
     <div>
-      <h1>Missing animals in Skåne</h1>
+      <h2>Missing animals in Skåne</h2>
+      <p>
+        Click on an ad for more information!{" "}   
+         <Link to="/login">Login</Link> to create an ad or to comment.
+       
+      </p>
       {animals.length === 0 ? (
         <p>No animals found.</p>
       ) : (
@@ -105,10 +110,7 @@ const AnimalCardsHome = () => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button
-              variant="primary"
-              onClick={() => navigate("/comment")}
-            >
+            <Button variant="primary" onClick={() => navigate("/comment")}>
               Contact Owner
             </Button>
           </Modal.Footer>

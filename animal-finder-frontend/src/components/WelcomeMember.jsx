@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function WelcomeMember() {
   const [firstName, setFirstName] = useState("");
@@ -39,15 +39,15 @@ function WelcomeMember() {
         Welcome {firstName} {lastName}
       </h1>
       <div className="line-length">
+        <p>Add a new missing animal ad on the <Link to="/addanimal">Add New Animal page</Link>.</p>
         <p>
-          Here you can see your ads with missing animals at the moment. You can
-          add more missing animals and update or delete existing ads.
+          Below you can see your current ads. Click on the ad to update or delete it!
         </p>
+        <h2>Comments</h2>
         <p>
-          If you go to the Comment section you can see if you have comments on
-          your ad.
+          If you go to the "All animals" section you can comment on other ads and see if you have comments on your ad.
         </p>
-        <p>Good look finding your missing darlings!</p>
+        <p>Good luck finding your missing darlings!</p>
       </div>
    </>
   );
