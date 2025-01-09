@@ -25,10 +25,7 @@ namespace AnimalFinderBackend.Controllers
             _context = context;
             _hostingEnvironment = hostingEnvironment;
 
-            //if (string.IsNullOrEmpty(_hostingEnvironment.WebRootPath))
-            //    {
-            //    throw new InvalidOperationException("WebRootPath is not set.");
-            //    }
+
             }
 
         //Listing all animals
@@ -175,200 +172,8 @@ namespace AnimalFinderBackend.Controllers
             return Ok(animals);
             }
 
-        ////Updating an animal for a specific user
-        //[Authorize]
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutUserAnimal(int id, [FromForm] AnimalDto animalDto, IFormFile imageFile)
-        //    {
-        //    // Getting id from token
-        //    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        //    if (string.IsNullOrEmpty(userId))
-        //        {
-        //        return Unauthorized();
-        //        }
-
-        //    // Getting specific animal from id
-        //    var animal = await _context.Animals.FindAsync(id);
-
-        //    // If animal not found
-        //    if (animal == null || animal.UserId != userId)
-        //        {
-        //        return NotFound();
-        //        }
-
-        //    animal.Type = animalDto.Type;
-        //    animal.Name = animalDto.Name;
-        //    animal.Description = animalDto.Description;
-        //    animal.Neighborhood = animalDto.Neighborhood;
-        //    animal.DateOfDisappearance = animalDto.DateOfDisappearance;
-
-        //    if (imageFile != null)
-        //        {
-        //        // Allowed file types
-        //        var allowedFileTypes = new[] { "image/jpeg", "image/png", "image/webp" };
-
-        //        // Max file size in bytes (1MB)
-        //        var maxFileSize = 2 * 1024 * 1024;
-
-        //        // Check file type
-        //        if (!allowedFileTypes.Contains(imageFile.ContentType))
-        //            {
-        //            ModelState.AddModelError("ImageFile", "Invalid file type. Only JPEG, PNG, and WEBP are allowed.");
-        //            return BadRequest(new ValidationProblemDetails(ModelState));
-        //            }
-
-        //        // Check file size
-        //        if (imageFile.Length > maxFileSize)
-        //            {
-        //            ModelState.AddModelError("ImageFile", "File size exceeds the 1 MB limit.");
-        //            return BadRequest(new ValidationProblemDetails(ModelState));
-        //            }
-
-        //        // Creates path to folder uploads
-        //        var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-        //        // Creates folder if does not exist
-        //        if (!Directory.Exists(uploads))
-        //            {
-        //            Directory.CreateDirectory(uploads);
-        //            }
-
-        //        // Creates unique filename
-        //        var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-
-        //        // Combines path to folder and the file name
-        //        var filePath = Path.Combine(uploads, uniqueFileName);
-
-        //        // Creates new file with the uploaded content
-        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //            {
-        //            await imageFile.CopyToAsync(fileStream);
-        //            }
-        //        // Set imageUrl to the path of the file
-        //        animal.ImageUrl = "/uploads/" + uniqueFileName;
-        //        }
-
-        //    _context.Entry(animal).State = EntityState.Modified;
-
-        //    try
-        //        {
-        //        await _context.SaveChangesAsync();
-        //        }
-        //    catch (DbUpdateConcurrencyException)
-        //        {
-        //        if (!AnimalExists(id))
-        //            {
-        //            return NotFound("The animal does not exist");
-        //            }
-        //        else
-        //            {
-        //            throw;
-        //            }
-        //        }
-
-        //    return NoContent();
-        //    }
-
-        ////Updating new(does not allow onlyurl)
-        //[Authorize]
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutUserAnimal(int id, [FromForm] AnimalDto animalDto, IFormFile imageFile)
-        //    {
-        //    // Getting id from token
-        //    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        //    if (string.IsNullOrEmpty(userId))
-        //        {
-        //        return Unauthorized();
-        //        }
-
-        //    // Getting specific animal from id
-        //    var animal = await _context.Animals.FindAsync(id);
-
-        //    // If animal not found or does not belong to the user
-        //    if (animal == null || animal.UserId != userId)
-        //        {
-        //        return NotFound();
-        //        }
-
-        //    animal.Type = animalDto.Type;
-        //    animal.Name = animalDto.Name;
-        //    animal.Description = animalDto.Description;
-        //    animal.Neighborhood = animalDto.Neighborhood;
-        //    animal.DateOfDisappearance = animalDto.DateOfDisappearance;
-
-        //    if (imageFile != null)
-        //        {
-        //        // Allowed file types
-        //        var allowedFileTypes = new[] { "image/jpeg", "image/png", "image/webp" };
-
-        //        // Max file size in bytes (1MB)
-        //        var maxFileSize = 2 * 1024 * 1024;
-
-        //        // Check file type
-        //        if (!allowedFileTypes.Contains(imageFile.ContentType))
-        //            {
-        //            ModelState.AddModelError("ImageFile", "Invalid file type. Only JPEG, PNG, and WEBP are allowed.");
-        //            return BadRequest(new ValidationProblemDetails(ModelState));
-        //            }
-
-        //        // Check file size
-        //        if (imageFile.Length > maxFileSize)
-        //            {
-        //            ModelState.AddModelError("ImageFile", "File size exceeds the 1 MB limit.");
-        //            return BadRequest(new ValidationProblemDetails(ModelState));
-        //            }
-
-        //        // Creates path to folder uploads
-        //        var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-        //        // Creates folder if does not exist
-        //        if (!Directory.Exists(uploads))
-        //            {
-        //            Directory.CreateDirectory(uploads);
-        //            }
-
-        //        // Creates unique filename
-        //        var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-
-        //        // Combines path to folder and the file name
-        //        var filePath = Path.Combine(uploads, uniqueFileName);
-
-        //        // Creates new file with the uploaded content
-        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //            {
-        //            await imageFile.CopyToAsync(fileStream);
-        //            }
-        //        // Set imageUrl to the path of the file
-        //        animal.ImageUrl = "/uploads/" + uniqueFileName;
-        //        }
-        //    else if (!string.IsNullOrEmpty(animalDto.ImageUrl))
-        //        {
-        //        // If no new image is uploaded, keep the existing image URL
-        //        animal.ImageUrl = animalDto.ImageUrl;
-        //        }
-
-        //    _context.Entry(animal).State = EntityState.Modified;
-
-        //    try
-        //        {
-        //        await _context.SaveChangesAsync();
-        //        }
-        //    catch (DbUpdateConcurrencyException)
-        //        {
-        //        if (!AnimalExists(id))
-        //            {
-        //            return NotFound("The animal does not exist");
-        //            }
-        //        else
-        //            {
-        //            throw;
-        //            }
-        //        }
-
-        //    return NoContent();
-        //    }
-
-        //Updating newer
+        //Updating specific animal. If no new imageFile is sent, old url will be used.
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUserAnimal(int id, [FromForm] AnimalDto animalDto, IFormFile? imageFile)
@@ -403,6 +208,7 @@ namespace AnimalFinderBackend.Controllers
                 // If no new image is uploaded, keep the existing image URL
                 animal.ImageUrl = animalDto.ImageUrl;
                 }
+
 
             else if (imageFile != null)
                 {
@@ -472,30 +278,6 @@ namespace AnimalFinderBackend.Controllers
 
 
 
-        ////Getting one specific animal image from user
-        //[Authorize]
-        //[HttpGet("{id}/image")]
-        //public async Task<IActionResult> GetAnimalImage(int id)
-        //    {
-        //    // Getting id from token
-        //    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        //    if (string.IsNullOrEmpty(userId))
-        //        {
-        //        return Unauthorized();
-        //        }
-
-        //    // Getting specific animal from id
-        //    var animal = await _context.Animals.FindAsync(id);
-
-        //    // If animal not found or does not belong to the user
-        //    if (animal == null || animal.UserId != userId)
-        //        {
-        //        return NotFound();
-        //        }
-
-        //    return Ok(new { imageUrl = animal.ImageUrl });
-        //    }
 
 
         //Deleting a specific animal for a specific user
