@@ -26,6 +26,14 @@ namespace AnimalFinderBackend.Controllers
             _hostingEnvironment = hostingEnvironment;
             }
 
+        // Method to delete a file
+        private void DeleteFile(string filePath)
+            {
+            if (System.IO.File.Exists(filePath))
+                {
+                System.IO.File.Delete(filePath);
+                }
+            }
 
 
         ////Listing all animals (public)
@@ -255,6 +263,7 @@ namespace AnimalFinderBackend.Controllers
 
             else if (imageFile != null)
                 {
+
                 // Allowed file types
                 var allowedFileTypes = new[] { "image/jpeg", "image/png", "image/webp" };
 
@@ -294,6 +303,15 @@ namespace AnimalFinderBackend.Controllers
                     {
                     await imageFile.CopyToAsync(fileStream);
                     }
+
+
+                // Delete the old image file
+                if (!string.IsNullOrEmpty(animal.ImageUrl))
+                    {
+                    var oldFilePath = Path.Combine(_hostingEnvironment.WebRootPath, animal.ImageUrl.TrimStart('/'));
+                    DeleteFile(oldFilePath);
+                    }
+
                 // Set imageUrl to the path of the file
                 animal.ImageUrl = "/uploads/" + uniqueFileName;
                 }
@@ -328,6 +346,7 @@ namespace AnimalFinderBackend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserAnimal(int id)
             {
+            //Getting userId from token
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(userId))
@@ -335,6 +354,7 @@ namespace AnimalFinderBackend.Controllers
                 return Unauthorized();
                 }
 
+            //Getting animal from id
             var animal = await _context.Animals.FindAsync(id);
             if (animal == null)
                 {
@@ -344,6 +364,13 @@ namespace AnimalFinderBackend.Controllers
             if (animal.UserId != userId)
                 {
                 return StatusCode(403, "You do not have the right to delete this animal");
+                }
+
+            // Delete the image file
+            if (!string.IsNullOrEmpty(animal.ImageUrl))
+                {
+                var filePath = Path.Combine(_hostingEnvironment.WebRootPath, animal.ImageUrl.TrimStart('/'));
+                DeleteFile(filePath);
                 }
 
             _context.Animals.Remove(animal);
