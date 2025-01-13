@@ -19,7 +19,7 @@ const AnimalCardsHome = () => {
     const fetchAnimals = async () => {
       setLoading(true);
       try {
-        const response = await AnimalService.getAnimals();
+        const response = await AnimalService.getPublicAnimals();
         const data = response.data.$values;
         setAnimals(data);
       } catch (error) {
@@ -55,14 +55,12 @@ const AnimalCardsHome = () => {
     <div>
       <h2>Missing animals in Lund</h2>
       <p>
-        Click on an ad for more information!{" "}   
-         <Link to="/login">Login</Link> to create an ad or to comment.
-       
+        Click on an ad for more information! <Link to="/login">Login</Link> to
+        create an ad or to comment.
       </p>
       {animals.length === 0 ? (
         <p>No animals found.</p>
       ) : (
-       
         <Row xs={2} sm={2} md={3} lg={4} className="g-3 mt-2">
           {animals.map((animal) => (
             <Col key={animal.animalId}>
@@ -102,6 +100,7 @@ const AnimalCardsHome = () => {
               Close
             </Button>
             <Button variant="primary" onClick={() => navigate("/comment")}>
+         
               Contact Owner
             </Button>
           </Modal.Footer>

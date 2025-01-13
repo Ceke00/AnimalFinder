@@ -1,9 +1,10 @@
 import React from 'react'
+import AnimalCardsComment from '../components/AnimalCardsComment'
 
 function MemberPageComment() {
   return (
     <div>
-      MemberPage Comment
+     <AnimalCardsComment/>
     </div>
   )
 }

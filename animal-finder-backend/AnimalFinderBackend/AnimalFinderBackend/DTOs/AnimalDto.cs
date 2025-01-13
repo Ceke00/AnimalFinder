@@ -30,5 +30,7 @@ namespace AnimalFinderBackend.DTOs
 
 
         public string? ImageUrl { get; set; }
+
+
         }
     }

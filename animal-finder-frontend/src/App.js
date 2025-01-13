@@ -108,7 +108,7 @@ import Container from "react-bootstrap/Container";
 import LoggedOutPage from "./pages/LoggedOutPage";
 import MemberPageAddAnimal from "./pages/MemberPageAddAnimal";
 import MemberPageComment from "./pages/MemberPageComment";
-import MemberPageDeleteAnimal from "./pages/MemberPageDeleteAnimal";
+
 import MemberPageUpdateAnimal from "./pages/MemberPageUpdateAnimal";
 import { jwtDecode } from "jwt-decode";
 import AuthService from "./services/auth.service";
@@ -159,7 +159,7 @@ const App = () => {
       <Container>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/*" element={<ErrorPage/>}/>
+          <Route path="/*" element={<ErrorPage />} />
           <Route
             path="/login"
             element={<LoginPage setIsLoggedIn={setIsLoggedIn} />}
@@ -187,14 +187,6 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <MemberPageComment />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/deleteanimal"
-            element={
-              <ProtectedRoute>
-                <MemberPageDeleteAnimal />
               </ProtectedRoute>
             }
           />

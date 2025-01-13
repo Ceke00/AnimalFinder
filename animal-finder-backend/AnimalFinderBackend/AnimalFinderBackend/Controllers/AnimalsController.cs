@@ -24,20 +24,63 @@ namespace AnimalFinderBackend.Controllers
             {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
-
-
             }
 
-        //Listing all animals
-        // GET: api/Animals
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Animal>>> GetAnimals()
+
+
+        ////Listing all animals (public)
+        [HttpGet("public")]
+        public async Task<ActionResult<IEnumerable<AnimalPublicResponseDto>>> GetPublicAnimals()
             {
-            return await _context.Animals.ToListAsync();
+            var animals = await _context.Animals
+
+                .Select(a => new AnimalPublicResponseDto
+                    {
+                    AnimalId = a.AnimalId,
+                    Type = a.Type,
+                    Name = a.Name,
+                    Description = a.Description,
+                    Neighborhood = a.Neighborhood,
+                    DateOfDisappearance = a.DateOfDisappearance,
+                    ImageUrl = a.ImageUrl,
+
+                    })
+                .ToListAsync();
+
+            return Ok(animals);
             }
+
+
+        //Getting all animals and some user details
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<AnimalMemberResponseDto>>> GetAnimals()
+            {
+            var animals = await _context.Animals
+                .Include(a => a.User)
+                .Select(a => new AnimalMemberResponseDto
+                    {
+                    AnimalId = a.AnimalId,
+                    Type = a.Type,
+                    Name = a.Name,
+                    Description = a.Description,
+                    Neighborhood = a.Neighborhood,
+                    DateOfDisappearance = a.DateOfDisappearance,
+                    ImageUrl = a.ImageUrl,
+                    OwnerFirstName = a.User.FirstName,
+                    OwnerLastName = a.User.LastName,
+                    UserId = a.UserId
+                    })
+                .ToListAsync();
+
+            return Ok(animals);
+            }
+
+
 
         //Used by PostAnimal to confirm post and give feedback to client
         //GET: api/Animals/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Animal>> GetAnimal(int id)
             {

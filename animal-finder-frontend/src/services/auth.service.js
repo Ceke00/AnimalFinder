@@ -33,6 +33,7 @@ const login = (email, password) => {
           username: decodedToken.unique_name,
           firstName: decodedToken.FirstName,
           lastName: decodedToken.LastName,
+          userId: decodedToken.nameid,
         };
         console.log("First Name: " + decodedToken.FirstName);
         console.log("Saving user data to localStorage:", userData);

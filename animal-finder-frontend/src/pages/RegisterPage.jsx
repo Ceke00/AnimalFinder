@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AuthService from "../services/auth.service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -53,6 +53,7 @@ const RegisterPage = () => {
     <div>
       <h1>Registration &ndash; Animal Finder</h1>
       <p>It's free to become a member. Just fill in this form!</p>
+      <p>Already a member? Go to <Link to="/login">Login Page</Link></p>
       <Form onSubmit={handleRegister}>
         <Form.Group className="mb-3" controlId="formFirstName">
           <Form.Label>First name</Form.Label>
