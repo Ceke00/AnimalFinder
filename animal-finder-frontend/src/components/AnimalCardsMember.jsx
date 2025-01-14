@@ -75,7 +75,7 @@ const AnimalCardsMember = () => {
 
   return (
     <div>
-      <h2>My missing animals</h2>
+      <h2>Your missing animals</h2>
       {animals.length === 0 ? (
         <p>No animals found.</p>
       ) : (

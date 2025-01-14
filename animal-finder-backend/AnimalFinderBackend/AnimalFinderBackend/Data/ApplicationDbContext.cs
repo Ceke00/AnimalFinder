@@ -14,7 +14,7 @@ namespace AnimalFinderBackend.Data
 
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Test> Tests { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {

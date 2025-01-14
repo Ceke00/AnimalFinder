@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
@@ -13,7 +12,7 @@ import Container from "react-bootstrap/Container";
 import LoggedOutPage from "./pages/LoggedOutPage";
 import MemberPageAddAnimal from "./pages/MemberPageAddAnimal";
 import MemberPageComment from "./pages/MemberPageComment";
-import UpdateProfilePage from "./pages/UpdateProfilePage";
+
 import MemberPageUpdateAnimal from "./pages/MemberPageUpdateAnimal";
 import { jwtDecode } from "jwt-decode";
 import AuthService from "./services/auth.service";
@@ -21,9 +20,8 @@ import ErrorPage from "./pages/ErrorPage";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("user"));
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   console.log("logged in: " + isLoggedIn);
- 
 
   useEffect(() => {
     const checkTokenValidity = () => {
@@ -50,12 +48,10 @@ const App = () => {
     checkTokenValidity();
   }, []);
 
-
-
   const handleLogout = () => {
-   AuthService.logout();
+    AuthService.logout();
     setIsLoggedIn(false);
-     navigate("/loggedout");
+    navigate("/loggedout");
   };
 
   return (
@@ -79,14 +75,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/updateprofile"
-            element={
-              <ProtectedRoute>
-                <UpdateProfilePage />
-              </ProtectedRoute>
-            }
-          />
+
           <Route
             path="/addanimal"
             element={

@@ -53,7 +53,7 @@ const AnimalCardsHome = () => {
 
   return (
     <div>
-      <h2>Missing animals in Lund</h2>
+      <h2>{animals.length} missing animals in Lund</h2>
       <p>
         Click on an ad for more information! <Link to="/login">Login</Link> to
         create an ad or to comment.

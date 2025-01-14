@@ -41,7 +41,8 @@ namespace AnimalFinderBackend.Controllers
                     UserId = c.UserId,
                     FirstName = c.User.FirstName,
                     LastName = c.User.LastName,
-                    DateCreated = c.DateCreated
+                    DateCreated = c.DateCreated,
+                    AvatarUrl = c.User.AvatarUrl
                     })
                 .FirstOrDefaultAsync();
 
@@ -71,7 +72,8 @@ namespace AnimalFinderBackend.Controllers
                     UserId = c.UserId,
                     FirstName = c.User.FirstName,
                     LastName = c.User.LastName,
-                    DateCreated = c.DateCreated
+                    DateCreated = c.DateCreated,
+                    AvatarUrl = c.User.AvatarUrl
                     })
                 .ToListAsync();
 
@@ -198,3 +200,5 @@ namespace AnimalFinderBackend.Controllers
             }
         }
     }
+
+

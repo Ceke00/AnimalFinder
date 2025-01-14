@@ -1,5 +1,6 @@
 ﻿using AnimalFinderBackend.DTOs;
 using AnimalFinderBackend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -48,7 +49,8 @@ namespace AnimalFinderBackend.Controllers
                 UserName = model.Email,
                 Email = model.Email,
                 FirstName = model.FirstName,
-                LastName = model.LastName
+                LastName = model.LastName,
+                AvatarUrl = "" //
                 };
 
             // Creates new user in db
@@ -139,5 +141,64 @@ namespace AnimalFinderBackend.Controllers
             //returns http 401 response
             return Unauthorized();
             }
+
+
+        //Updating the users avatar
+        [Authorize]
+        [HttpPut("updateAvatar")]
+        public async Task<IActionResult> UpdateAvatar([FromBody] UpdateProfileDto model)
+            {
+            //Getting userId from token
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+                {
+                return Unauthorized();
+                }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                {
+                return NotFound("User not found.");
+                }
+
+            user.AvatarUrl = model.AvatarUrl;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                {
+                return BadRequest("Failed to update avatar.");
+                }
+
+            return NoContent();
+            }
+
+
+        //Getting some user data
+        [Authorize]
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetProfile()
+            {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+                {
+                return Unauthorized();
+                }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                {
+                return NotFound("User not found.");
+                }
+
+            var userProfile = new
+                {
+                user.FirstName,
+                user.LastName,
+                user.AvatarUrl
+                };
+
+            return Ok(userProfile);
+            }
+
         }
     }

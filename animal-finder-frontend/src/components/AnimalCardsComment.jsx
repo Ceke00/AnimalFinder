@@ -13,10 +13,11 @@ import {
   Alert,
 } from "react-bootstrap";
 import "./AnimalCards.scss";
-import { CiFaceSmile } from "react-icons/ci";
+import { FaRegSmile } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { avatars } from "../avatars";
 
 const AnimalCardsComment = () => {
   // Managing animals
@@ -229,7 +230,7 @@ const AnimalCardsComment = () => {
   return (
     <div>
       <h1>Comment on missing animals in Lund</h1>
-      <p>Have you seen any of these animals? Click on an ad to comment!</p>
+      <p>Have you seen any of these {animals.length} animals? Click on an ad to comment!</p>
 
       {/* Display animal cards */}
       {animals.length === 0 ? (
@@ -319,7 +320,7 @@ const AnimalCardsComment = () => {
 
                     {/* Comments list */}
                     <hr />
-                    <h5>Previous comments</h5>
+                    <h5>Previous comments ({comments.length} comments)</h5>
                     {comments.length === 0 ? (
                       <p>No comments yet.</p>
                     ) : (
@@ -335,29 +336,34 @@ const AnimalCardsComment = () => {
                             }
                           >
                             {/* Comment header with user info */}
-                            <Row className="align-items-center">
-                              <Col xs={1}>
-                                <CiFaceSmile className="smile" />
-                              </Col>
-                              <Col xs={10}>
-                                <p className="mb-0">
-                                  <strong>
-                                    {comment.firstName} {comment.lastName}
-                                    {comment.userId ===
-                                      selectedAnimal.userId && (
-                                      <span> (owner)</span>
-                                    )}
-                                  </strong>
-                                </p>
-                              </Col>
-                            </Row>
-
+                            <div className="mb-3">
+                              <span className="me-2">
+                                {comment.avatarUrl ? (
+                                  avatars
+                                    .find(
+                                      (avatar) =>
+                                        avatar.url === comment.avatarUrl
+                                    )
+                                    ?.icon(30) || (
+                                    <FaRegSmile className="smile" size={30} />
+                                  )
+                                ) : (
+                                  <FaRegSmile className="smile" size={30} />
+                                )}
+                              </span>
+                              <span>
+                                <strong>
+                                  {comment.firstName} {comment.lastName}
+                                  {comment.userId === selectedAnimal.userId && (
+                                    <span> (owner)</span>
+                                  )}
+                                </strong>
+                              </span>
+                            </div>
                             {/* Comment content */}
-                            <Row className="mt-2">
-                              <Col>
-                                <p>{comment.content}</p>
-                              </Col>
-                            </Row>
+                            <div className="">
+                              <p>{comment.content}</p>
+                            </div>
                             <hr />
 
                             {/* Comment actions (edit/delete for specific user) */}

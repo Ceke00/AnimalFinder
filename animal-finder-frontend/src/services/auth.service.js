@@ -52,11 +52,34 @@ const logout = () => {
   localStorage.removeItem("user");
 };
 
+
+
+const updateAvatar = (avatarUrl) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  return axios.put(
+    API_URL + "updateAvatar",
+    { avatarUrl },
+    {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    }
+  );
+};
+
+const getProfile = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  return axios.get(API_URL + "profile", {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  });
+};
+
 export default {
   register,
   login,
   logout,
+  updateAvatar,
+  getProfile,
 };
-
-
-

@@ -8,6 +8,7 @@ namespace AnimalFinderBackend.Models
         {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string AvatarUrl { get; set; }
 
         [JsonIgnore]
         public ICollection<Animal> Animals { get; set; }
