@@ -4,6 +4,7 @@ import { GiWomanElfFace, GiTurtle, GiDinosaurRex } from "react-icons/gi";
 import { LuDog, LuCat } from "react-icons/lu";
 import { FaEarlybirds, FaRegSmile } from "react-icons/fa";
 import { PiRabbit } from "react-icons/pi";
+import { IoFish } from "react-icons/io5";
 
 
 const getIcon = (IconComponent, size) => <IconComponent size={size} />;
@@ -41,5 +42,10 @@ export const avatars = [
     url: "PiRabbit",
     label: "Rabbit",
     icon: (size) => getIcon(PiRabbit, size),
+  },
+  {
+    url: "IoFish",
+    label: "Fish",
+    icon: (size) => getIcon(IoFish, size),
   },
 ];
