@@ -1,8 +1,10 @@
 using AnimalFinderBackend.Data;
 using AnimalFinderBackend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -20,10 +22,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings
     options.Password.RequireDigit = true; options.Password.RequiredLength = 8; options.Password.RequireNonAlphanumeric = true; options.Password.RequireUppercase = true; options.Password.RequireLowercase = true; options.Password.RequiredUniqueChars = 1;
-    // Lockout settings 
-    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); 
-    //options.Lockout.MaxFailedAccessAttempts = 5; 
-    //options.Lockout.AllowedForNewUsers = true; 
+
     // User settings
     options.User.RequireUniqueEmail = true;
 });
@@ -103,6 +102,28 @@ builder.Services.AddEndpointsApiExplorer(); builder.Services.AddSwaggerGen(
 
 //Building App
 var app = builder.Build();
+
+
+// In Program.cs
+using (var scope = app.Services.CreateScope())
+    {
+    var services = scope.ServiceProvider;
+    try
+        {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        var userManager = services.GetRequiredService<UserManager<User>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+        // This ensures the database is deleted and recreated
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+        }
+    catch (Exception ex)
+        {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database.");
+        }
+    }
 
 
 
