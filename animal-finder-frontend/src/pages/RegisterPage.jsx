@@ -12,7 +12,6 @@ const RegisterPage = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  
   const handleRegister = async (e) => {
     e.preventDefault();
     //resets error messages
@@ -21,9 +20,8 @@ const RegisterPage = () => {
     try {
       await AuthService.register(firstName, lastName, email, password);
       navigate("/login");
-    } 
-    //if register not ok
-    catch (error) {
+    } catch (error) {
+      //if register not ok
       //any messages from backend?
       if (error.response?.data) {
         //if error messages exists - set errors (could have defiened field or not)
@@ -53,7 +51,9 @@ const RegisterPage = () => {
     <div>
       <h1>Registration &ndash; Animal Finder</h1>
       <p>It's free to become a member. Just fill in this form!</p>
-      <p>Already a member? Go to <Link to="/login">Login Page</Link></p>
+      <p>
+        Already a member? Go to <Link to="/login">Login Page</Link>
+      </p>
       <Form onSubmit={handleRegister}>
         <Form.Group className="mb-3" controlId="formFirstName">
           <Form.Label>First name</Form.Label>

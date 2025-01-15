@@ -18,11 +18,6 @@ const getCommentsForAnimal = (animalId) => {
   return axios.get(`${API_URL}animal/${animalId}`, getAuthHeader());
 };
 
-// // Getting a specific comment
-// const getComment = (commentId) => {
-//    return axios.get(`${API_URL}${commentId}`, getAuthHeader());
-// };
-
 // Create new comment for a specific animal
 const postComment = (animalId, content) => {
   return axios.post(`${API_URL}${animalId}`, { content }, getAuthHeader());
@@ -44,7 +39,6 @@ const deleteComment = (animalId, commentId) => {
 
 const commentService = {
   getCommentsForAnimal,
-  //getComment,
   postComment,
   updateComment,
   deleteComment,

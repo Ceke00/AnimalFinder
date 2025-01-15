@@ -114,8 +114,6 @@ using (var scope = app.Services.CreateScope())
         var userManager = services.GetRequiredService<UserManager<User>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-        // This ensures the database is deleted and recreated
-        context.Database.EnsureDeleted();
         context.Database.EnsureCreated();
         }
     catch (Exception ex)

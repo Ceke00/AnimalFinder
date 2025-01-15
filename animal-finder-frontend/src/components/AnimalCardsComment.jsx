@@ -1,23 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
 import AnimalService from "../services/animal.service";
 import CommentService from "../services/comment.service";
-import AnimalCard from "./AnimalCard";
 import {
   Modal,
   Button,
   Spinner,
   Row,
   Col,
-  Container,
-  Form,
-  Alert,
+  Container
 } from "react-bootstrap";
 import "./AnimalCards.scss";
-import { FaRegSmile } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { avatars } from "../avatars";
+import AnimalGrid from "./AnimalGrid";
+import CommentHeader from "./CommentHeader";
+import NewCommentForm from "./NewCommentForm";
+import DeleteCommentAlert from "./DeleteCommentAlert";
+import UpdateCommentForm from "./UpdateCommentForm";
+import AnimalDetails from "./AnimalDetails";
 
 const AnimalCardsComment = () => {
   // Managing animals
@@ -230,20 +231,13 @@ const AnimalCardsComment = () => {
   return (
     <div>
       <h1>Comment on missing animals in Lund</h1>
-      <p>Have you seen any of these {animals.length} animals? Click on an ad to comment!</p>
+      <p>
+        Have you seen any of these {animals.length} animals? Click on an ad to
+        comment!
+      </p>
 
       {/* Display animal cards */}
-      {animals.length === 0 ? (
-        <p>No animals found.</p>
-      ) : (
-        <Row xs={2} sm={2} md={3} lg={4} className="g-3 mt-2">
-          {animals.map((animal) => (
-            <Col key={animal.animalId}>
-              <AnimalCard animal={animal} handleShow={handleShow} />
-            </Col>
-          ))}
-        </Row>
-      )}
+      <AnimalGrid animals={animals} handleShow={handleShow} />
 
       {/* Modal for displaying animal details and comments */}
       <Modal show={show} onHide={handleClose}>
@@ -256,21 +250,10 @@ const AnimalCardsComment = () => {
           {selectedAnimal && (
             <>
               {/* Animal details section */}
-              <img
-                src={`https://localhost:7221${selectedAnimal.imageUrl}`}
-                alt={selectedAnimal.name}
-                style={{ maxWidth: "50%", marginBottom: "1rem" }}
+              <AnimalDetails
+                animal={selectedAnimal}
+                formatDate={formatDate}
               />
-              <p>
-                <strong>Date of disapperance: </strong>
-                {formatDate(selectedAnimal.dateOfDisappearance)}
-              </p>
-              <p>
-                <strong>Neighborhood:</strong> {selectedAnimal.neighborhood}
-              </p>
-              <p>
-                <strong>Description:</strong> {selectedAnimal.description}
-              </p>
               <hr />
               <p>
                 <strong>Have you seen {selectedAnimal.name}? </strong>Please
@@ -295,28 +278,12 @@ const AnimalCardsComment = () => {
                   <hr />
                   <div ref={commentFormRef} className="comment-form">
                     {/* New comment form */}
-                    <Form
-                      className="mb-4"
-                      onSubmit={handlePostComment}
-                      id="formComment"
-                    >
-                      <Form.Group className="mb-2" controlId="formComment">
-                        <Form.Label className="h5">Comment</Form.Label>
-                        <p>Please, use a respectful tone!</p>
-                        <Form.Control
-                          as="textarea"
-                          rows={2}
-                          value={newComment}
-                          onChange={(e) => setNewComment(e.target.value)}
-                        />
-                      </Form.Group>
-                      {errorMessage && (
-                        <Alert variant="danger">{errorMessage}</Alert>
-                      )}
-                      <Button variant="primary" type="submit">
-                        Submit comment
-                      </Button>
-                    </Form>
+                    <NewCommentForm
+                      newComment={newComment}
+                      setNewComment={setNewComment}
+                      handlePostComment={handlePostComment}
+                      errorMessage={errorMessage}
+                    />
 
                     {/* Comments list */}
                     <hr />
@@ -336,30 +303,10 @@ const AnimalCardsComment = () => {
                             }
                           >
                             {/* Comment header with user info */}
-                            <div className="mb-3">
-                              <span className="me-2">
-                                {comment.avatarUrl ? (
-                                  avatars
-                                    .find(
-                                      (avatar) =>
-                                        avatar.url === comment.avatarUrl
-                                    )
-                                    ?.icon(30) || (
-                                    <FaRegSmile className="smile" size={30} />
-                                  )
-                                ) : (
-                                  <FaRegSmile className="smile" size={30} />
-                                )}
-                              </span>
-                              <span>
-                                <strong>
-                                  {comment.firstName} {comment.lastName}
-                                  {comment.userId === selectedAnimal.userId && (
-                                    <span> (owner)</span>
-                                  )}
-                                </strong>
-                              </span>
-                            </div>
+                            <CommentHeader
+                              comment={comment}
+                              animalUserId={selectedAnimal.userId}
+                            />
                             {/* Comment content */}
                             <div className="">
                               <p>{comment.content}</p>
@@ -402,89 +349,24 @@ const AnimalCardsComment = () => {
                             {/* Delete confirmation alert */}
                             {selectedComment?.commentId === comment.commentId &&
                               showAlertDelete && (
-                                <Alert
-                                  className="mt-3"
-                                  variant="danger"
-                                  onClose={() => setShowAlertDelete(false)}
-                                  dismissible
-                                >
-                                  <Alert.Heading>
-                                    Are you sure you want to delete this comment
-                                    on {selectedAnimal.name}?
-                                  </Alert.Heading>
-                                  <p>This action cannot be undone.</p>
-                                  <div className="d-flex justify-content-end">
-                                    <Button
-                                      onClick={() => setShowAlertDelete(false)}
-                                      variant="outline-secondary"
-                                      className="me-2"
-                                    >
-                                      Cancel
-                                    </Button>
-                                    <Button
-                                      onClick={confirmDelete}
-                                      variant="danger"
-                                    >
-                                      Delete comment
-                                    </Button>
-                                  </div>
-                                </Alert>
+                                <DeleteCommentAlert
+                                  selectedAnimal={selectedAnimal}
+                                  confirmDelete={confirmDelete}
+                                  setShowAlertDelete={setShowAlertDelete}
+                                />
                               )}
 
                             {/* Update comment form */}
                             {selectedComment?.commentId === comment.commentId &&
                               showAlertUpdate && (
-                                <Alert
-                                  className="mt-3"
-                                  variant="warning"
-                                  onClose={() => setShowAlertUpdate(false)}
-                                  dismissible
-                                >
-                                  <Alert.Heading>
-                                    Update your comment on {selectedAnimal.name}
-                                    ?
-                                  </Alert.Heading>
-                                  <Form
-                                    className="mb-4"
-                                    onSubmit={confirmUpdate}
-                                  >
-                                    <Form.Group
-                                      className="mb-2"
-                                      controlId="formUpdateComment"
-                                    >
-                                      <Form.Label className="h5">
-                                        Your comment
-                                      </Form.Label>
-                                      <Form.Control
-                                        as="textarea"
-                                        rows={2}
-                                        value={updateComment}
-                                        onChange={(e) =>
-                                          setUpdateComment(e.target.value)
-                                        }
-                                      />
-                                    </Form.Group>
-                                    {errorMessage && (
-                                      <Alert variant="danger">
-                                        {errorMessage}
-                                      </Alert>
-                                    )}
-                                    <div className="d-flex justify-content-end">
-                                      <Button
-                                        onClick={() =>
-                                          setShowAlertUpdate(false)
-                                        }
-                                        variant="outline-secondary"
-                                        className="me-2"
-                                      >
-                                        Cancel
-                                      </Button>
-                                      <Button variant="primary" type="submit">
-                                        Submit updated comment
-                                      </Button>
-                                    </div>
-                                  </Form>
-                                </Alert>
+                                <UpdateCommentForm
+                                  selectedAnimal={selectedAnimal}
+                                  confirmUpdate={confirmUpdate}
+                                  updateComment={updateComment}
+                                  setUpdateComment={setUpdateComment}
+                                  errorMessage={errorMessage}
+                                  setShowAlertUpdate={setShowAlertUpdate}
+                                />
                               )}
                           </Container>
                         ))}

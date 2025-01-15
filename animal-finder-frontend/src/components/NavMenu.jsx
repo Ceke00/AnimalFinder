@@ -96,28 +96,6 @@ function NavMenu({ isLoggedIn, handleLogout }) {
                     Add New Animal
                   </NavDropdown.Item>
 
-                  {/* <NavDropdown.Item
-                    as={NavLink}
-                    to="/deleteanimal"
-                    onClick={closeNavbar}
-                    className={({ isActive }) =>
-                      isActive ? "active nav-link" : "nav-link"
-                    }
-                  >
-                    Delete Animal
-                  </NavDropdown.Item>
-
-                  <NavDropdown.Item
-                    as={NavLink}
-                    to="/updateanimal"
-                    onClick={closeNavbar}
-                    className={({ isActive }) =>
-                      isActive ? "active nav-link" : "nav-link"
-                    }
-                  >
-                    Update Animal
-                  </NavDropdown.Item> */}
-
                   <NavDropdown.Item
                     as={NavLink}
                     to="/comment"

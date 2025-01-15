@@ -18,6 +18,7 @@ import { jwtDecode } from "jwt-decode";
 import AuthService from "./services/auth.service";
 import ErrorPage from "./pages/ErrorPage";
 
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("user"));
   const navigate = useNavigate();
@@ -46,6 +47,8 @@ const App = () => {
     };
 
     checkTokenValidity();
+
+    
   }, []);
 
   const handleLogout = () => {

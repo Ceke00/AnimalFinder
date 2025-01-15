@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import AnimalService from "../services/animal.service";
-import AnimalCard from "./AnimalCard";
-import { Alert, Spinner, Button, Modal, Row, Col } from "react-bootstrap";
+import { Alert, Spinner, Button, Modal } from "react-bootstrap";
 import "./AnimalCards.scss";
 import { useNavigate } from "react-router-dom";
+import AnimalGrid from "./AnimalGrid";
+import AnimalDetails from "./AnimalDetails";
 
 const AnimalCardsMember = () => {
   const [animals, setAnimals] = useState([]);
@@ -76,17 +77,8 @@ const AnimalCardsMember = () => {
   return (
     <div>
       <h2>Your missing animals</h2>
-      {animals.length === 0 ? (
-        <p>No animals found.</p>
-      ) : (
-        <Row xs={2} sm={2} md={3} lg={4} className="g-3 mt-2">
-          {animals.map((animal) => (
-            <Col key={animal.animalId}>
-              <AnimalCard animal={animal} handleShow={handleShow} />
-            </Col>
-          ))}
-        </Row>
-      )}
+
+      <AnimalGrid animals={animals} handleShow={handleShow} />
 
       {selectedAnimal && (
         <Modal show={show} onHide={handleClose}>
@@ -97,21 +89,7 @@ const AnimalCardsMember = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <img
-              src={`https://localhost:7221${selectedAnimal.imageUrl}`}
-              alt={selectedAnimal.name}
-              style={{ maxWidth: "50%", marginBottom: "1rem" }}
-            />
-            <p>
-              <strong>Date of disapperance: </strong>{" "}
-              {formatDate(selectedAnimal.dateOfDisappearance)}
-            </p>
-            <p>
-              <strong>Neighborhood:</strong> {selectedAnimal.neighborhood}
-            </p>
-            <p>
-              <strong>Description:</strong> {selectedAnimal.description}
-            </p>
+            <AnimalDetails animal={selectedAnimal} formatDate={formatDate} />
           </Modal.Body>
           <Modal.Footer>
             {showAlert && (

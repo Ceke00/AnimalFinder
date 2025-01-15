@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import AnimalService from "../services/animal.service";
 
-
 function MemberPageUpdateAnimal() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,10 +22,9 @@ function MemberPageUpdateAnimal() {
   const [showImageUpload, setShowImageUpload] = useState(false);
   const [errors, setErrors] = useState({});
 
-
   const handleUpdate = async (e) => {
     e.preventDefault();
-     
+
     setErrors(null);
     setErrors({});
 
@@ -46,7 +44,7 @@ function MemberPageUpdateAnimal() {
           ? "Date of Disappearance is required"
           : "",
       });
-     
+
       return;
     }
 
@@ -85,8 +83,7 @@ function MemberPageUpdateAnimal() {
             : error.response.data.title || "Failed to update animal.",
         });
       }
-     } 
-     
+    }
   };
 
   const handleCancel = () => {

@@ -7,21 +7,20 @@ import AuthService from "../services/auth.service";
 
 function MemberPage() {
   const [avatarUrl, setAvatarUrl] = useState("FaRegSmile");
-  
-   useEffect(() => {
-     AuthService.getProfile().then((response) => {
-       const user = response.data;
-       setAvatarUrl(user.avatarUrl || "FaRegSmile");
-     });
-   }, []);
-  
+
+  useEffect(() => {
+    AuthService.getProfile().then((response) => {
+      const user = response.data;
+      setAvatarUrl(user.avatarUrl || "FaRegSmile");
+    });
+  }, []);
+
   const handleAvatarUpdate = (newAvatarUrl) => {
     setAvatarUrl(newAvatarUrl);
   };
   return (
     <Container>
       <WelcomeMember avatarUrl={avatarUrl} />
-
       <AnimalCardsMember />
       <UpdateAvatar
         currentAvatar={avatarUrl}

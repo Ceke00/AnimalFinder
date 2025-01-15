@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import "./AnimalCard.scss"
+import "./AnimalCard.scss";
 
 const AnimalCard = ({ animal, handleShow }) => {
   const imageUrl = `https://localhost:7221${animal.imageUrl}`;

@@ -1,12 +1,12 @@
-import React from 'react'
-import AnimalCardsComment from '../components/AnimalCardsComment'
+import React from "react";
+import AnimalCardsComment from "../components/AnimalCardsComment";
 
 function MemberPageComment() {
   return (
     <div>
-     <AnimalCardsComment/>
+      <AnimalCardsComment />
     </div>
-  )
+  );
 }
 
-export default MemberPageComment
+export default MemberPageComment;

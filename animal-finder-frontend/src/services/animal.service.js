@@ -15,7 +15,7 @@ const getAuthHeader = () => {
 
 //Geting all animals -public endpoint without user info
 const getPublicAnimals = () => {
-  return axios.get(API_URL+"public");
+  return axios.get(API_URL + "public");
 };
 
 //Getting all animals - for logged in users
@@ -53,7 +53,6 @@ const deleteAnimal = (id) => {
   return axios.delete(API_URL + id, getAuthHeader());
 };
 
-
 export default {
   getPublicAnimals,
   getAnimals,
@@ -61,5 +60,4 @@ export default {
   postAnimal,
   updateAnimal,
   deleteAnimal,
-
 };
