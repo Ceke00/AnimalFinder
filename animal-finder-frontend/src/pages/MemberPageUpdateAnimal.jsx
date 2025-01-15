@@ -168,7 +168,7 @@ function MemberPageUpdateAnimal() {
             <Button
               variant="outline-secondary"
               onClick={() => setShowImageUpload(!showImageUpload)}
-              className="mt-2"
+              className="my-2 me-2"
             >
               Change Image
             </Button>
