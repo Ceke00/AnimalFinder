@@ -250,10 +250,7 @@ const AnimalCardsComment = () => {
           {selectedAnimal && (
             <>
               {/* Animal details section */}
-              <AnimalDetails
-                animal={selectedAnimal}
-                formatDate={formatDate}
-              />
+              <AnimalDetails animal={selectedAnimal} formatDate={formatDate} />
               <hr />
               <p>
                 <strong>Have you seen {selectedAnimal.name}? </strong>Please
@@ -287,7 +284,9 @@ const AnimalCardsComment = () => {
 
                     {/* Comments list */}
                     <hr />
-                    <h5>Previous comments ({comments.length} comments)</h5>
+                    <p className="h5">
+                      Previous comments ({comments.length} comments)
+                    </p>
                     {comments.length === 0 ? (
                       <p>No comments yet.</p>
                     ) : (

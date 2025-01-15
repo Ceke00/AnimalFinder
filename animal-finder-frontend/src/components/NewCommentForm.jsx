@@ -8,7 +8,7 @@ const NewCommentForm = ({
   errorMessage,
 }) => {
   return (
-    <Form className="mb-4" onSubmit={handlePostComment} id="formComment">
+    <Form className="mb-4" onSubmit={handlePostComment}>
       <Form.Group className="mb-2" controlId="formComment">
         <Form.Label className="h5">Comment</Form.Label>
         <p>Please, use a respectful tone!</p>
