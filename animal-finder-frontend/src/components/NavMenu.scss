@@ -3,19 +3,6 @@
     font-size: 1.2rem;
     font-weight: 500;
   }
-  .navbar-brand {
-    //color: var(--primary-subbtle);
-    //width: 300px;
-    // height: auto;
-
-    // &:hover,
-    // &:focus {
-    //   color: var(--primary-subtle);
-    // }
-    // &:focus {
-    //   outline: var(--warning) solid 2px;
-    // }
-  }
   .nav-link {
     color: var(--light);
     margin-right: 2rem;
@@ -29,15 +16,13 @@
     }
 
     &.active {
-      color: var(--warning) !important;
-
       &::before {
         content: "➤ ";
       }
     }
     &:focus {
-      outline: var(--warning) solid 2px;
-      color: var(--warning);
+      outline: var(--light) solid 2px;
+      color: var(--light);
     }
   }
 
