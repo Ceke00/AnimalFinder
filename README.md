@@ -40,7 +40,7 @@ Animal Finder is a fullstack web application that helps pet owners locate their 
   - **Register**: Create account with name, email, and password.
   - **Login**: Secure authentication system
 
-### Pages for Authenticated Users**:
+### Pages for Authenticated Users
   - **My Animals**: Manage personal pet listings (delete animal/link to update animal) and avatar settings.
   - **Add New Animal**: Add new pet ad.
   - **Update Animal**: Edit existing pet ad.
