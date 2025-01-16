@@ -24,8 +24,11 @@ function WelcomeMember({ avatarUrl }) {
 
   return (
     <>
-      <h1 className="d-flex align-items-center">
-        Welcome {firstName} {lastName} <span className="ms-2">{currentAvatar.icon(40)}</span>
+      <h1 className="d-flex align-items-center line-length">
+        Welcome {firstName} {lastName}{" "}
+        <span className="ms-2" aria-hidden="true">
+          {currentAvatar.icon(40)}
+        </span>
       </h1>
       <div className="line-length">
         <p>

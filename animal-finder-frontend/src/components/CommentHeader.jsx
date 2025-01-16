@@ -5,7 +5,7 @@ import { avatars } from "../avatars";
 const CommentHeader = ({ comment, animalUserId }) => {
   return (
     <div className="mb-3">
-      <span className="me-2">
+      <span className="me-2" aria-hidden>
         {comment.avatarUrl ? (
           avatars
             .find((avatar) => avatar.url === comment.avatarUrl)

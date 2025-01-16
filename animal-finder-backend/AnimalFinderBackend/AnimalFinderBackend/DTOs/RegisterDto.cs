@@ -6,6 +6,7 @@ namespace AnimalFinderBackend.DTOs
         {
         [Required]
         [EmailAddress]
+        [StringLength(50, ErrorMessage = "The {0} must be at most {1} characters long.")]
         public string Email { get; set; }
 
         [Required]
@@ -13,9 +14,12 @@ namespace AnimalFinderBackend.DTOs
         public string Password { get; set; }
 
         [Required]
+        [StringLength(30, ErrorMessage = "The {0} must be at most {1} characters long.")]
         public string FirstName { get; set; }
 
+
         [Required]
+        [StringLength(30, ErrorMessage = "The {0} must be at most {1} characters long.")]
         public string LastName { get; set; }
         }
     }

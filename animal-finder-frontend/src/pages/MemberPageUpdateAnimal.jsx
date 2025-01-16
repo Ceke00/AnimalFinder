@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -8,7 +8,6 @@ function MemberPageUpdateAnimal() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  //using state for animal data
   const { animal } = location.state || {};
   const [type, setType] = useState(animal?.type || "");
   const [name, setName] = useState(animal?.name || "");
@@ -17,15 +16,52 @@ function MemberPageUpdateAnimal() {
   const [dateOfDisappearance, setDateOfDisappearance] = useState(
     animal?.dateOfDisappearance.split("T")[0] || ""
   );
-
   const [imageFile, setImageFile] = useState(null);
   const [showImageUpload, setShowImageUpload] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const typeRef = useRef(null);
+  const nameRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const neighborhoodRef = useRef(null);
+  const dateOfDisappearanceRef = useRef(null);
+  const imageFileRef = useRef(null);
+
+  //Sets focus on field with error both visually and for keyboard
+  const setFocusOnError = (ref) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth" });
+      const input = ref.current.querySelector("input");
+      if (input) {
+        input.focus();
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+     
+      setTimeout(() => {
+        if (errors.Type) {
+          setFocusOnError(typeRef);
+        } else if (errors.Name) {
+          setFocusOnError(nameRef);
+        } else if (errors.Description) {
+          setFocusOnError(descriptionRef);
+        } else if (errors.Neighborhood) {
+          setFocusOnError(neighborhoodRef);
+        } else if (errors.DateOfDisappearance) {
+          setFocusOnError(dateOfDisappearanceRef);
+        } else if (errors.ImageFile) {
+          setFocusOnError(imageFileRef);
+        }
+      }, 100);
+    }
+  }, [errors]);
+
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    setErrors(null);
     setErrors({});
 
     if (
@@ -44,18 +80,15 @@ function MemberPageUpdateAnimal() {
           ? "Date of Disappearance is required"
           : "",
       });
-
       return;
     }
 
-    //Appending formdata
     const formData = new FormData();
     formData.append("Type", type);
     formData.append("Name", name);
     formData.append("Description", description);
     formData.append("Neighborhood", neighborhood);
     formData.append("DateOfDisappearance", dateOfDisappearance);
-    //handling case if new image is uploaded or not
     if (imageFile) {
       formData.append("imageFile", imageFile);
     } else {
@@ -94,54 +127,83 @@ function MemberPageUpdateAnimal() {
     <div>
       <h1>Update Animal</h1>
       {animal ? (
-        <Form onSubmit={handleUpdate}>
-          <Form.Group className="mb-3" controlId="formAnimalType">
+        <Form onSubmit={handleUpdate} noValidate>
+          <Form.Group className="mb-3" controlId="formAnimalType" ref={typeRef}>
             <Form.Label>Type</Form.Label>
             <Form.Control
               type="text"
               value={type}
               onChange={(e) => setType(e.target.value)}
               required
+              aria-describedby="typeError"
+              aria-invalid={errors.Type ? "true" : "false"}
             />
-            {errors.Type && <p className="text-danger">{errors.Type}</p>}
+            {errors.Type && (
+              <p id="typeError" className="text-danger" role="alert">
+                {errors.Type}
+              </p>
+            )}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formAnimalName">
+          <Form.Group className="mb-3" controlId="formAnimalName" ref={nameRef}>
             <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              aria-describedby="nameError"
+              aria-invalid={errors.Name ? "true" : "false"}
             />
-            {errors.Name && <p className="text-danger">{errors.Name}</p>}
+            {errors.Name && (
+              <p id="nameError" className="text-danger" role="alert">
+                {errors.Name}
+              </p>
+            )}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formAnimalDescription">
+          <Form.Group
+            className="mb-3"
+            controlId="formAnimalDescription"
+            ref={descriptionRef}
+          >
             <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
+              aria-describedby="descriptionError"
+              aria-invalid={errors.Description ? "true" : "false"}
             />
             {errors.Description && (
-              <p className="text-danger">{errors.Description}</p>
+              <p id="descriptionError" className="text-danger" role="alert">
+                {errors.Description}
+              </p>
             )}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formAnimalNeighborhood">
+          <Form.Group
+            className="mb-3"
+            controlId="formAnimalNeighborhood"
+            ref={neighborhoodRef}
+          >
             <Form.Label>Neighborhood</Form.Label>
             <Form.Control
               type="text"
               value={neighborhood}
               onChange={(e) => setNeighborhood(e.target.value)}
               required
+              aria-describedby="neighborhoodError"
+              aria-invalid={errors.Neighborhood ? "true" : "false"}
             />
             {errors.Neighborhood && (
-              <p className="text-danger">{errors.Neighborhood}</p>
+              <p id="neighborhoodError" className="text-danger" role="alert">
+                {errors.Neighborhood}
+              </p>
             )}
           </Form.Group>
           <Form.Group
             className="mb-3"
             controlId="formAnimalDateOfDisappearance"
+            ref={dateOfDisappearanceRef}
           >
             <Form.Label>Date of Disappearance</Form.Label>
             <Form.Control
@@ -149,12 +211,24 @@ function MemberPageUpdateAnimal() {
               value={dateOfDisappearance}
               onChange={(e) => setDateOfDisappearance(e.target.value)}
               required
+              aria-describedby="dateOfDisappearanceError"
+              aria-invalid={errors.DateOfDisappearance ? "true" : "false"}
             />
             {errors.DateOfDisappearance && (
-              <p className="text-danger">{errors.DateOfDisappearance}</p>
+              <p
+                id="dateOfDisappearanceError"
+                className="text-danger"
+                role="alert"
+              >
+                {errors.DateOfDisappearance}
+              </p>
             )}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formAnimalImageUrl">
+          <Form.Group
+            className="mb-3"
+            controlId="formAnimalImageUrl"
+            ref={imageFileRef}
+          >
             <Form.Label>Current Image</Form.Label>
             {animal.imageUrl && (
               <div>
@@ -178,9 +252,13 @@ function MemberPageUpdateAnimal() {
                 <Form.Control
                   type="file"
                   onChange={(e) => setImageFile(e.target.files[0])}
+                  aria-describedby="imageFileError"
+                  aria-invalid={errors.imageFile ? "true" : "false"}
                 />
                 {errors.imageFile && (
-                  <p className="text-danger">{errors.imageFile}</p>
+                  <p id="imageFileError" className="text-danger" role="alert">
+                    {errors.imageFile}
+                  </p>
                 )}
               </>
             )}
@@ -191,7 +269,11 @@ function MemberPageUpdateAnimal() {
           <Button variant="primary" type="submit" className="ms-2">
             Update
           </Button>
-          {errors.general && <p className="text-danger">{errors.general}</p>}
+          {errors.general && (
+            <p className="text-danger" role="alert">
+              {errors.general}
+            </p>
+          )}
         </Form>
       ) : (
         <p>No animal data available.</p>

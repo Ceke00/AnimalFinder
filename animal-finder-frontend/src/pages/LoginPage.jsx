@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+
+
+import React, { useState, useRef, useEffect } from "react";
 import AuthService from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
@@ -11,9 +13,36 @@ const LoginPage = ({ setIsLoggedIn }) => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  //If login ok navigate to memberpage, else show error message
+  // Add refs for form fields
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  // Function to handle focus management
+  const setFocusOnField = (ref) => {
+    if (ref.current) {
+      const input = ref.current.querySelector("input");
+      if (input) {
+        input.focus();
+      }
+    }
+  };
+
+  // Set focus on email field when error message appears
+  useEffect(() => {
+    if (message) {
+      // Short timeout to ensure DOM has updated
+      setTimeout(() => {
+        setFocusOnField(emailRef);
+      }, 100);
+    }
+  }, [message]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    // Clear any existing message
+    setMessage("");
+
     try {
       const userData = await AuthService.login(email, password);
       setIsLoggedIn(true);
@@ -28,23 +57,33 @@ const LoginPage = ({ setIsLoggedIn }) => {
   return (
     <div>
       <h1>Login &ndash; Animal Finder</h1>
-      <Form onSubmit={handleLogin}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form onSubmit={handleLogin} noValidate>
+        <Form.Group className="mb-3" controlId="formBasicEmail" ref={emailRef}>
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+            aria-describedby={message ? "loginError" : undefined}
+            aria-invalid={message ? "true" : "false"}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group
+          className="mb-3"
+          controlId="formBasicPassword"
+          ref={passwordRef}
+        >
           <Form.Label>Password</Form.Label>
           <Form.Control
             placeholder="Enter password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+            aria-describedby={message ? "loginError" : undefined}
+            aria-invalid={message ? "true" : "false"}
           />
         </Form.Group>
         <p>
@@ -54,7 +93,11 @@ const LoginPage = ({ setIsLoggedIn }) => {
         <Button variant="primary" type="submit">
           Login
         </Button>
-        {message && <p className="text-danger mt-2">{message}</p>}
+        {message && (
+          <p id="loginError" className="text-danger mt-2" role="alert">
+            {message}
+          </p>
+        )}
       </Form>
     </div>
   );

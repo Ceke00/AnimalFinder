@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import AuthService from "../services/auth.service";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import { avatars} from "../avatars";
+import { avatars } from "../avatars";
 
 const UpdateAvatar = ({ currentAvatar, onAvatarUpdate }) => {
   const [avatarUrl, setAvatarUrl] = useState(currentAvatar);
@@ -23,19 +22,32 @@ const UpdateAvatar = ({ currentAvatar, onAvatarUpdate }) => {
       onAvatarUpdate(avatarUrl);
       setSubmittedAvatar(avatarUrl);
       setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 3000); 
+      setTimeout(() => setShowAlert(false), 3000);
     } catch (error) {
       console.error("Failed to update avatar:", error);
     }
   };
 
+  const currentAvatarObj = avatars.find(
+    (avatar) => avatar.url === submittedAvatar
+  );
 
- return (
+  return (
     <>
       <h2 className="mt-4">Update your Avatar</h2>
-      
-      <p>Your avatar is shown beside your name when you comment on an ad. Current avatar: </p>
-      <div className="me-3">{avatars.find(avatar => avatar.url === submittedAvatar).icon(70)}</div>
+
+      <p>
+        Your avatar is shown beside your name when you comment on an ad. Current
+        avatar:{" "}
+      </p>
+      <div className="me-3">
+        <span
+          role="img"
+          aria-label={`Current avatar is ${currentAvatarObj.label}`}
+        >
+          {currentAvatarObj.icon(70)}
+        </span>
+      </div>
       <div className="d-flex align-items-center mb-3">
         <Form onSubmit={handleUpdateAvatar}>
           <Form.Group className="mb-3" controlId="formAvatar">
@@ -46,22 +58,24 @@ const UpdateAvatar = ({ currentAvatar, onAvatarUpdate }) => {
                   inline
                   key={avatar.url}
                   type="radio"
-                  label={avatar.icon(30)}
                   name="avatar"
                   value={avatar.url}
                   checked={avatarUrl === avatar.url}
                   onChange={() => setAvatarUrl(avatar.url)}
                   required
                   className="m-4 align-middle"
-                  aria-checked={avatarUrl === avatar.url}
-                  aria-labelledby={`label-${avatar.url}`}
+                  aria-label={avatar.label}
+                  label={<span aria-hidden="true">{avatar.icon(30)}</span>}
                 />
               ))}
             </div>
           </Form.Group>
 
           {showAlert && (
-            <Alert variant="success">Avatar updated successfully!</Alert>
+            <Alert variant="success">
+              Avatar updated successfully to{" "}
+              {avatars.find((avatar) => avatar.url === avatarUrl).label}!
+            </Alert>
           )}
           <Button variant="primary" type="submit">
             Update Avatar
@@ -73,5 +87,3 @@ const UpdateAvatar = ({ currentAvatar, onAvatarUpdate }) => {
 };
 
 export default UpdateAvatar;
-
-

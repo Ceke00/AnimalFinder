@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import AnimalService from "../services/animal.service";
 import CommentService from "../services/comment.service";
-import {
-  Modal,
-  Button,
-  Spinner,
-  Row,
-  Col,
-  Container
-} from "react-bootstrap";
+import { Modal, Button, Spinner, Row, Col, Container } from "react-bootstrap";
 import "./AnimalCards.scss";
 import { IconContext } from "react-icons";
 import { FaRegEdit } from "react-icons/fa";
@@ -48,6 +41,7 @@ const AnimalCardsComment = () => {
   const lastCommentRef = useRef(null);
   // Ref for scrolling back to form
   const commentFormRef = useRef(null);
+  const textAreaRef = useRef(null);
 
   // Fetching animals and user data
   useEffect(() => {
@@ -83,9 +77,16 @@ const AnimalCardsComment = () => {
     }
   }, [shouldScroll]);
 
+
   //scrolling back to form
   const scrollToForm = () => {
     commentFormRef.current.scrollIntoView({ behavior: "smooth" });
+
+    setTimeout(() => {
+      if (textAreaRef.current) {
+        textAreaRef.current.focus();
+      }
+    }, 500);
   };
 
   //Closing modal and resetting states
@@ -276,6 +277,7 @@ const AnimalCardsComment = () => {
                   <div ref={commentFormRef} className="comment-form">
                     {/* New comment form */}
                     <NewCommentForm
+                      ref={textAreaRef}
                       newComment={newComment}
                       setNewComment={setNewComment}
                       handlePostComment={handlePostComment}
@@ -327,8 +329,11 @@ const AnimalCardsComment = () => {
                                         handleUpdateComment(comment)
                                       }
                                       className="cursor-pointer"
+                                      aria-label={"Edit comment written by you"}
+                                      role="button"
+                                      tabIndex="0"
                                     >
-                                      <FaRegEdit /> Edit
+                                      <FaRegEdit aria-hidden /> Edit
                                     </div>
                                   </Col>
                                   <Col xs={3}>
@@ -337,8 +342,13 @@ const AnimalCardsComment = () => {
                                         handleDeleteComment(comment)
                                       }
                                       className="cursor-pointer"
+                                      aria-label={
+                                        "Delete comment written by you"
+                                      }
+                                      role="button"
+                                      tabIndex="0"
                                     >
-                                      <MdDelete /> Delete
+                                      <MdDelete aria-hidden /> Delete
                                     </div>
                                   </Col>
                                 </>
