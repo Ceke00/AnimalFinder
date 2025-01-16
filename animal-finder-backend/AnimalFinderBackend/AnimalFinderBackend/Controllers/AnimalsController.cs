@@ -144,7 +144,7 @@ namespace AnimalFinderBackend.Controllers
                 var allowedFileTypes = new[] { "image/jpeg", "image/png", "image/webp" };
 
                 // Max file size in bytes (1MB)
-                var maxFileSize = 2 * 1024 * 1024;
+                var maxFileSize = 1 * 1024 * 1024;
 
                 // Check file type
                 if (!allowedFileTypes.Contains(imageFile.ContentType))
