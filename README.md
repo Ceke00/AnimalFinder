@@ -76,7 +76,7 @@ You can create a new account to test the application. The application also comes
 ### Test Users Password
 All seeded users have the same password: Password123!
 
-### Available test accounts:
+### Available test accounts
 - user1@example.com (John Doe)
 - user2@example.com (Jane Smith)
 - user3@example.com (Alice Johnson)
