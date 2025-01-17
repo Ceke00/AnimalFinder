@@ -4,11 +4,15 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import AnimalService from "../services/animal.service";
 
+//Page for updating animal ad
 function MemberPageUpdateAnimal() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  //handling of animal data
   const { animal } = location.state || {};
+
+  //Setting animal data
   const [type, setType] = useState(animal?.type || "");
   const [name, setName] = useState(animal?.name || "");
   const [description, setDescription] = useState(animal?.description || "");
@@ -17,9 +21,13 @@ function MemberPageUpdateAnimal() {
     animal?.dateOfDisappearance.split("T")[0] || ""
   );
   const [imageFile, setImageFile] = useState(null);
+
   const [showImageUpload, setShowImageUpload] = useState(false);
+
+  //setting errors
   const [errors, setErrors] = useState({});
 
+  //Creating refs in form
   const typeRef = useRef(null);
   const nameRef = useRef(null);
   const descriptionRef = useRef(null);
@@ -38,9 +46,9 @@ function MemberPageUpdateAnimal() {
     }
   };
 
+  //Sets focus on first field with error when error occurs
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
-     
       setTimeout(() => {
         if (errors.Type) {
           setFocusOnError(typeRef);
@@ -59,6 +67,7 @@ function MemberPageUpdateAnimal() {
     }
   }, [errors]);
 
+  //Handle update of animal ad. Validation of all fields.
   const handleUpdate = async (e) => {
     e.preventDefault();
 
@@ -83,6 +92,7 @@ function MemberPageUpdateAnimal() {
       return;
     }
 
+    //Adding data to FormData
     const formData = new FormData();
     formData.append("Type", type);
     formData.append("Name", name);
@@ -95,9 +105,11 @@ function MemberPageUpdateAnimal() {
       formData.append("ImageUrl", animal.imageUrl);
     }
 
+    //Trying to update formData
     try {
       await AnimalService.updateAnimal(animal.animalId, formData);
       navigate("/memberpage");
+      //error-handling from backend
     } catch (error) {
       console.error("Error updating animal:", error);
       if (error.response?.data) {
