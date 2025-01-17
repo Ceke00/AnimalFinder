@@ -1,11 +1,10 @@
-
-
 import React, { useState, useRef, useEffect } from "react";
 import AuthService from "../services/auth.service";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+//Page with form for user registration
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -73,7 +72,7 @@ const RegisterPage = () => {
       //if register not ok
       //any messages from backend?
       if (error.response?.data) {
-        //if error messages exists - set errors (could have defiened field or not)
+        //if error messages exists - set errors 
         if (error.response.data.errors) {
           const errorMessages = error.response.data.errors;
           const newErrors = {};
