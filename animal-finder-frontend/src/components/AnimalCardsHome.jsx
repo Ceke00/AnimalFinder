@@ -13,6 +13,7 @@ const AnimalCardsHome = () => {
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState(null);
+  const [sortOrder, setSortOrder] = useState("newest"); // State for sort order
   const navigate = useNavigate();
 
   //fetching animals from public endpoint
@@ -22,7 +23,14 @@ const AnimalCardsHome = () => {
       try {
         const response = await AnimalService.getPublicAnimals();
         const data = response.data.$values;
-        setAnimals(data);
+
+        // Sort animals by date of disappearance
+        const sortedAnimals = data.sort(
+          (a, b) =>
+            new Date(b.dateOfDisappearance) - new Date(a.dateOfDisappearance)
+        );
+        setAnimals(sortedAnimals);
+      
       } catch (error) {
         console.error("Error fetching animals:", error);
       } finally {
@@ -32,6 +40,23 @@ const AnimalCardsHome = () => {
 
     fetchAnimals();
   }, []);
+
+  // Handle sorting
+  const handleSort = () => {
+    const sortedAnimals = [...animals].sort((a, b) => {
+      if (sortOrder === "newest") {
+        return (
+          new Date(a.dateOfDisappearance) - new Date(b.dateOfDisappearance)
+        );
+      } else {
+        return (
+          new Date(b.dateOfDisappearance) - new Date(a.dateOfDisappearance)
+        );
+      }
+    });
+    setAnimals(sortedAnimals);
+    setSortOrder(sortOrder === "newest" ? "oldest" : "newest");
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = (animal) => {
@@ -60,6 +85,11 @@ const AnimalCardsHome = () => {
         Click on an ad for more information! <Link to="/login">Login</Link> to
         create an ad or to comment.
       </p>
+
+      {/* Sort button */}
+      <Button variant="secondary" onClick={handleSort}>
+        Sort by {sortOrder === "newest" ? "oldest" : "newest"}
+      </Button>
 
       {/* Animal grid */}
       <AnimalGrid animals={animals} handleShow={handleShow} />

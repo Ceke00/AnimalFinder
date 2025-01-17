@@ -17,6 +17,7 @@ const AnimalCardsComment = () => {
   // Managing animals
   const [animals, setAnimals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState("newest"); // State for sort order
 
   // Managing modal visibility and selected animal
   const [show, setShow] = useState(false);
@@ -49,7 +50,13 @@ const AnimalCardsComment = () => {
       setLoading(true);
       try {
         const response = await AnimalService.getAnimals();
-        setAnimals(response.data.$values);
+        const data = response.data.$values;
+        // Sort animals by date of disappearance
+        const sortedAnimals = data.sort(
+          (a, b) =>
+            new Date(b.dateOfDisappearance) - new Date(a.dateOfDisappearance)
+        );
+        setAnimals(sortedAnimals);
       } catch (error) {
         console.error("Error fetching animals:", error);
       } finally {
@@ -70,13 +77,29 @@ const AnimalCardsComment = () => {
     initializeUser();
   }, []);
 
+  // Handle sorting
+  const handleSort = () => {
+    const sortedAnimals = [...animals].sort((a, b) => {
+      if (sortOrder === "newest") {
+        return (
+          new Date(a.dateOfDisappearance) - new Date(b.dateOfDisappearance)
+        );
+      } else {
+        return (
+          new Date(b.dateOfDisappearance) - new Date(a.dateOfDisappearance)
+        );
+      }
+    });
+    setAnimals(sortedAnimals);
+    setSortOrder(sortOrder === "newest" ? "oldest" : "newest");
+  };
+
   // Scrolling to last comment when comments array changes
   useEffect(() => {
     if (lastCommentRef.current) {
       lastCommentRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [shouldScroll]);
-
 
   //scrolling back to form
   const scrollToForm = () => {
@@ -236,6 +259,11 @@ const AnimalCardsComment = () => {
         Have you seen any of these {animals.length} animals? Click on an ad to
         comment!
       </p>
+
+      {/* Sort button */}
+      <Button variant="secondary" onClick={handleSort}>
+        Sort by {sortOrder === "newest" ? "oldest" : "newest"}
+      </Button>
 
       {/* Display animal cards */}
       <AnimalGrid animals={animals} handleShow={handleShow} />
