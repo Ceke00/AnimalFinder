@@ -1,5 +1,3 @@
-
-
 import React, { useState, useRef, useEffect } from "react";
 import AuthService from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +15,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
-  // Function to handle focus management
+  // Function to handle focus management of ref
   const setFocusOnField = (ref) => {
     if (ref.current) {
       const input = ref.current.querySelector("input");
@@ -37,6 +35,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
     }
   }, [message]);
 
+  //Login function
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -82,8 +81,8 @@ const LoginPage = ({ setIsLoggedIn }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            aria-describedby={message ? "loginError" : undefined}
-            aria-invalid={message ? "true" : "false"}
+            aria-describedby={message ? "loginError" : undefined} //making connection with error message. Screenreaders read message when field is focused
+            aria-invalid={message ? "true" : "false"} //indicate if field has errors
           />
         </Form.Group>
         <p>
@@ -93,6 +92,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
         <Button variant="primary" type="submit">
           Login
         </Button>
+        {/* role=alert tells screenreader to read message */}
         {message && (
           <p id="loginError" className="text-danger mt-2" role="alert">
             {message}
