@@ -9,6 +9,7 @@ function NavMenu({ isLoggedIn, handleLogout }) {
   const [expanded, setExpanded] = useState(false);
   const [username, setUsername] = useState("Member");
 
+  //Setting user if logged in
   useEffect(() => {
     if (isLoggedIn) {
       const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -21,6 +22,7 @@ function NavMenu({ isLoggedIn, handleLogout }) {
   const closeNavbar = () => {
     setExpanded(false);
   };
+
   const handleLogoutClick = () => {
     AuthService.logout();
     handleLogout();
@@ -58,6 +60,7 @@ function NavMenu({ isLoggedIn, handleLogout }) {
             </Nav.Link>
 
             <NavDropdown title="Member pages" id="basic-nav-dropdown">
+              {/* If user not logged in - link to login  */}
               {!isLoggedIn && (
                 <NavDropdown.Item
                   as={NavLink}
@@ -72,6 +75,7 @@ function NavMenu({ isLoggedIn, handleLogout }) {
                 </NavDropdown.Item>
               )}
 
+              {/* If user is logged in -  show links to restricted pages */}
               {isLoggedIn && (
                 <>
                   <NavDropdown.Item
@@ -110,6 +114,7 @@ function NavMenu({ isLoggedIn, handleLogout }) {
               )}
             </NavDropdown>
 
+            {/* Show log out button if user is logged in */}
             {isLoggedIn && (
               <NavLink
                 to="/loggedout"

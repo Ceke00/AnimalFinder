@@ -1,5 +1,6 @@
 import React from "react";
 
+//Showing details of a specific animal
 const AnimalDetails = ({ animal, formatDate }) => {
   return (
     <>

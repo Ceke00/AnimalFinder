@@ -2,6 +2,7 @@ import React from "react";
 import { FaRegSmile } from "react-icons/fa";
 import { avatars } from "../avatars";
 
+//Showing avatar and user name for comment header
 const CommentHeader = ({ comment, animalUserId }) => {
   return (
     <div className="mb-3">

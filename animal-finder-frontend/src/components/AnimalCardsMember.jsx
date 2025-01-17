@@ -14,6 +14,7 @@ const AnimalCardsMember = () => {
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
 
+  //Fetching animals for specific user
   useEffect(() => {
     const fetchAnimals = async () => {
       setLoading(true);
@@ -42,12 +43,14 @@ const AnimalCardsMember = () => {
     setShow(true);
   };
 
+  //Showing delete alert
   const handleDelete = () => {
     if (selectedAnimal) {
       setShowAlert(true);
     }
   };
 
+  //Deleting animal
   const confirmDelete = async () => {
     try {
       await AnimalService.deleteAnimal(selectedAnimal.animalId);
@@ -61,6 +64,7 @@ const AnimalCardsMember = () => {
     }
   };
 
+  //Formating date
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "numeric", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -78,8 +82,10 @@ const AnimalCardsMember = () => {
     <div>
       <h2>Your missing animals</h2>
 
+      {/* Animal grid */}
       <AnimalGrid animals={animals} handleShow={handleShow} />
 
+      {/* Modal for a users specific animal */}
       {selectedAnimal && (
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -92,6 +98,7 @@ const AnimalCardsMember = () => {
             <AnimalDetails animal={selectedAnimal} formatDate={formatDate} />
           </Modal.Body>
           <Modal.Footer>
+            {/* Delete alert */}
             {showAlert && (
               <Alert
                 variant="danger"
@@ -126,6 +133,8 @@ const AnimalCardsMember = () => {
             <Button variant="danger" onClick={handleDelete}>
               Delete
             </Button>
+
+            {/* Link to update page */}
             <Button
               variant="primary"
               onClick={() =>

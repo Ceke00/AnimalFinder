@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import AnimalCard from "./AnimalCard";
 
+//Grid of animal cards
 const AnimalGrid = ({ animals, handleShow }) => {
   if (animals.length === 0) {
     return <p>No animals found.</p>;

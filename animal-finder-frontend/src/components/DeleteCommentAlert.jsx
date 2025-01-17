@@ -1,6 +1,7 @@
 import React from "react";
 import { Alert, Button } from "react-bootstrap";
 
+//Delete alert
 const DeleteCommentAlert = ({
   selectedAnimal,
   confirmDelete,

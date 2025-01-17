@@ -15,6 +15,7 @@ const AnimalCardsHome = () => {
   const [selectedAnimal, setSelectedAnimal] = useState(null);
   const navigate = useNavigate();
 
+  //fetching animals from public endpoint
   useEffect(() => {
     const fetchAnimals = async () => {
       setLoading(true);
@@ -38,6 +39,7 @@ const AnimalCardsHome = () => {
     setShow(true);
   };
 
+  //formatting dates
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "numeric", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -59,7 +61,10 @@ const AnimalCardsHome = () => {
         create an ad or to comment.
       </p>
 
+      {/* Animal grid */}
       <AnimalGrid animals={animals} handleShow={handleShow} />
+
+      {/* showing animalmodal */}
       {selectedAnimal && (
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -69,10 +74,7 @@ const AnimalCardsHome = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <AnimalDetails
-              animal={selectedAnimal}
-              formatDate={formatDate}
-            />
+            <AnimalDetails animal={selectedAnimal} formatDate={formatDate} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
