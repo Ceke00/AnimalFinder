@@ -21,7 +21,6 @@ function MemberPageUpdateAnimal() {
     animal?.dateOfDisappearance.split("T")[0] || ""
   );
   const [imageFile, setImageFile] = useState(null);
-
   const [showImageUpload, setShowImageUpload] = useState(false);
 
   //setting errors
