@@ -1,10 +1,11 @@
 import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 
+//Alert with form to update comment
 const UpdateCommentForm = ({
   selectedAnimal,
   confirmUpdate,
-  updateComment,
+  updateComment, //current comment text
   setUpdateComment,
   errorMessage,
   setShowAlertUpdate,

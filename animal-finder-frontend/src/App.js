@@ -18,7 +18,6 @@ import { jwtDecode } from "jwt-decode";
 import AuthService from "./services/auth.service";
 import ErrorPage from "./pages/ErrorPage";
 
-
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("user"));
   const navigate = useNavigate();
@@ -47,8 +46,6 @@ const App = () => {
     };
 
     checkTokenValidity();
-
-    
   }, []);
 
   const handleLogout = () => {
@@ -62,6 +59,7 @@ const App = () => {
       <NavMenu isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <Container>
         <Routes>
+          {/* Public routes */}
           <Route path="/" element={<HomePage />} />
           <Route path="/*" element={<ErrorPage />} />
           <Route
@@ -70,6 +68,8 @@ const App = () => {
           />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/loggedout" element={<LoggedOutPage />} />
+
+          {/* Restricted routes */}
           <Route
             path="/memberpage"
             element={

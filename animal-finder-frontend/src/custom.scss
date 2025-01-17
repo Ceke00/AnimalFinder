@@ -1,42 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 
-$primary: #035860 ;
-$primary-subtle:#cbf6f9;
+//defining BS-colors
+$primary: #035860;
+$primary-subtle: #cbf6f9;
 $secondary: #444444;
-$secondary-subtle:#cccccc;
+$secondary-subtle: #cccccc;
 $success: #167308;
-$success-subtle:#d2ee9f;
+$success-subtle: #d2ee9f;
 $info: #0d676a;
 $info-subtle: #a5f5f7;
-$warning: #ffd4aa; 
-$danger: #8e0161; 
-$danger-subtle: #fae0f1; 
-$light:#f7f8f8;
-$dark: #222; 
+$warning: #ffd4aa;
+$danger: #8e0161;
+$danger-subtle: #fae0f1;
+$light: #f7f8f8;
+$dark: #222;
 
 :root {
   --primary: #{$primary};
   --primary-subtle: #{$primary-subtle};
   --secondary: #{$secondary};
-   --secondary-subtle: #{$secondary-subtle};
+  --secondary-subtle: #{$secondary-subtle};
   --success: #{$success};
   --success-subtle: #{$success-subtle};
-  --info:#{$info};
-  --info-subtle:#{$info-subtle};
+  --info: #{$info};
+  --info-subtle: #{$info-subtle};
   --warning: #{$warning};
   --danger: #{$danger};
   --danger-subtle: #{$danger-subtle};
   --light: #{$light};
   --dark: #{$dark};
-  
 }
 
-// $body-color:$dark;
-// $body-bg: $light;
-
-$font-family-base: 'Quicksand', sans-serif;
-$headings-font-family: 'Quicksand', sans-serif;
+$font-family-base: "Quicksand", sans-serif;
+$headings-font-family: "Quicksand", sans-serif;
 $font-size-base: 1rem;
 
 @import "~bootstrap/scss/bootstrap";
-

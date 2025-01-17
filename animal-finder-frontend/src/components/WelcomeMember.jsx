@@ -1,26 +1,22 @@
-
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import { avatars } from "../avatars";
 
-
+//Dynamic welcome message on member Page
 function WelcomeMember({ avatarUrl }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
- 
 
   useEffect(() => {
     AuthService.getProfile().then((response) => {
       const user = response.data;
       setFirstName(user.firstName);
       setLastName(user.lastName);
-    
     });
   }, []);
 
-    const currentAvatar = avatars.find((avatar) => avatar.url === avatarUrl);
+  const currentAvatar = avatars.find((avatar) => avatar.url === avatarUrl);
 
   return (
     <>

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./WelcomeHome.scss";
 
+//Welcome message in header on home page with CTA
 function WelcomeHome() {
   return (
     <header className="mb-5" id="header-home">
@@ -17,7 +18,9 @@ function WelcomeHome() {
           <strong>It's free </strong>to become a member!
         </p>
 
-        <Link to="/register"className="btn btn-primary">Register now</Link>
+        <Link to="/register" className="btn btn-primary">
+          Register now
+        </Link>
       </div>
     </header>
   );

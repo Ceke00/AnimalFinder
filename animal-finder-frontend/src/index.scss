@@ -9,14 +9,18 @@ body {
   );
   min-height: 100vh;
 }
+
+//Limiting line-length for readability
 .line-length {
   max-width: 65ch !important;
 }
+
 .card {
   text-align: left;
 }
 
 p {
+  //editing link underline offset for readability
   a {
     text-decoration: underline;
     text-underline-offset: 0.3rem;
@@ -32,9 +36,4 @@ form {
     font-weight: 600;
     margin-top: 0.8rem;
   }
-}
-
-.thumbnail {
-  width: 80px;
-  height: auto;
 }

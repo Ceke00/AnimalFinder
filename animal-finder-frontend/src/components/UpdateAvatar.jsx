@@ -6,15 +6,19 @@ import Alert from "react-bootstrap/Alert";
 import { avatars } from "../avatars";
 
 const UpdateAvatar = ({ currentAvatar, onAvatarUpdate }) => {
+  //selected avatar in form
   const [avatarUrl, setAvatarUrl] = useState(currentAvatar);
   const [showAlert, setShowAlert] = useState(false);
+  //latest submitted avatar
   const [submittedAvatar, setSubmittedAvatar] = useState(currentAvatar);
 
+  //Setting avatar
   useEffect(() => {
     setAvatarUrl(currentAvatar);
     setSubmittedAvatar(currentAvatar);
   }, [currentAvatar]);
 
+  //updating avatar
   const handleUpdateAvatar = async (e) => {
     e.preventDefault();
     try {
@@ -28,6 +32,7 @@ const UpdateAvatar = ({ currentAvatar, onAvatarUpdate }) => {
     }
   };
 
+  //getting full avatar object from avatar-array matching last submitted avatar
   const currentAvatarObj = avatars.find(
     (avatar) => avatar.url === submittedAvatar
   );
@@ -40,6 +45,7 @@ const UpdateAvatar = ({ currentAvatar, onAvatarUpdate }) => {
         Your avatar is shown beside your name when you comment on an ad. Current
         avatar:{" "}
       </p>
+      {/* image of avatar */}
       <div className="me-3">
         <span
           role="img"
@@ -48,6 +54,8 @@ const UpdateAvatar = ({ currentAvatar, onAvatarUpdate }) => {
           {currentAvatarObj.icon(70)}
         </span>
       </div>
+
+      {/* form for changig avatar */}
       <div className="d-flex align-items-center mb-3">
         <Form onSubmit={handleUpdateAvatar}>
           <Form.Group className="mb-3" controlId="formAvatar">
@@ -71,6 +79,7 @@ const UpdateAvatar = ({ currentAvatar, onAvatarUpdate }) => {
             </div>
           </Form.Group>
 
+          {/* Alert when avatar is updated */}
           {showAlert && (
             <Alert variant="success">
               Avatar updated successfully to{" "}

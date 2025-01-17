@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 
+//Form for comments. Ref is set to be able to get focus on form when pushing "back to form"
 const NewCommentForm = forwardRef(
   ({ newComment, setNewComment, handlePostComment, errorMessage }, ref) => {
     return (

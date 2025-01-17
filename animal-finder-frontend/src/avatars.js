@@ -1,4 +1,3 @@
-
 import { SiHappycow } from "react-icons/si";
 import { GiWomanElfFace, GiTurtle, GiDinosaurRex } from "react-icons/gi";
 import { LuDog, LuCat } from "react-icons/lu";
@@ -6,7 +5,7 @@ import { FaEarlybirds, FaRegSmile } from "react-icons/fa";
 import { PiRabbit } from "react-icons/pi";
 import { IoFish } from "react-icons/io5";
 
-
+//getting specific react icon in a specific size
 const getIcon = (IconComponent, size) => <IconComponent size={size} />;
 
 export const avatars = [
