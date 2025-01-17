@@ -103,17 +103,17 @@ builder.Services.AddEndpointsApiExplorer(); builder.Services.AddSwaggerGen(
 //Building App
 var app = builder.Build();
 
-
-// In Program.cs
 using (var scope = app.Services.CreateScope())
     {
     var services = scope.ServiceProvider;
     try
         {
         var context = services.GetRequiredService<ApplicationDbContext>();
+        //handles User
         var userManager = services.GetRequiredService<UserManager<User>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
+        //ensuring db is created
         context.Database.EnsureCreated();
         }
     catch (Exception ex)
