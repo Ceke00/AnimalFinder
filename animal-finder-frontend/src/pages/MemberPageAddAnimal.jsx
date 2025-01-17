@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import AnimalService from "../services/animal.service";
 
+//Page with form to add new animal ad
 function MemberPageAddAnimal() {
   const [type, setType] = useState("");
   const [name, setName] = useState("");
@@ -14,6 +15,7 @@ function MemberPageAddAnimal() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
+  //creating refs in form
   const typeRef = useRef(null);
   const nameRef = useRef(null);
   const descriptionRef = useRef(null);
@@ -33,6 +35,7 @@ function MemberPageAddAnimal() {
     }
   };
 
+  //Sets focus on first field with error
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       // Short timeout to ensure DOM has updated
@@ -54,11 +57,12 @@ function MemberPageAddAnimal() {
     }
   }, [errors]);
 
+  //Handle post of animal ad. Validation of all fields.
   const handleAddAnimal = async (e) => {
     e.preventDefault();
     setErrors({});
 
-    // Validate all required fields
+    // Validate all required fields and set errors
     if (
       !type ||
       !name ||
@@ -75,11 +79,12 @@ function MemberPageAddAnimal() {
         DateOfDisappearance: !dateOfDisappearance
           ? "Date of Disappearance is required"
           : "",
-        ImageFile: !imageFile ? "Please select an image file" : "",
+        imageFile: !imageFile ? "Please select an image file" : "",
       });
       return;
     }
 
+    //Adding data to FormData
     const formData = new FormData();
     formData.append("Type", type);
     formData.append("Name", name);
@@ -88,9 +93,11 @@ function MemberPageAddAnimal() {
     formData.append("DateOfDisappearance", dateOfDisappearance);
     formData.append("imageFile", imageFile);
 
+    //try posting FormData
     try {
       await AnimalService.postAnimal(formData);
       navigate("/memberpage");
+      //error-handling from backend
     } catch (error) {
       if (error.response?.data) {
         const errorMessages = error.response.data.errors;
@@ -230,7 +237,7 @@ function MemberPageAddAnimal() {
             onChange={(e) => setImageFile(e.target.files[0])}
             required
             aria-describedby="imageFileError"
-            aria-invalid={errors.ImageFile ? "true" : "false"}
+            aria-invalid={errors.imageFile ? "true" : "false"}
           />
           {errors.imageFile && (
             <p id="imageFileError" className="text-danger" role="alert">
